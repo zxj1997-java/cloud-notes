@@ -18,4 +18,8 @@ onMounted(() => {
 .el-drawer__body {
   padding: 0 !important;
 }
+
+.el-popper {
+  z-index: 100000 !important;
+}
 </style>

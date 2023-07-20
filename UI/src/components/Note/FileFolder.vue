@@ -29,9 +29,9 @@
               <el-icon title="重命名" @click="item.isEdit=!item.isEdit" color="rgb(230,162,94)">
                 <Edit/>
               </el-icon>
-              <el-popconfirm title="Are you sure to delete this?">
+              <el-popconfirm  trigger="click" title="确认要删除吗?" :visible="popconfirm"   @confirm="confirmEvent(item)">
                 <template #reference>
-                  <el-icon title="删除" color="#f56c6c" @click="deleteFile(item)">
+                  <el-icon title="删除" color="#f56c6c" @click="popconfirm=true">
                     <DeleteFilled/>
                   </el-icon>
                 </template>
@@ -48,10 +48,13 @@
 </template>
 <script setup>
 import {updateNote,delNote} from "@/api/note/note";
+import {ElMessage} from "element-plus";
+import {ref} from "vue";
 
 const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
 
+const popconfirm=ref(false);
 function toChild(id, isDirectory) {
   if (isDirectory) {
     emits('toChild', id)
@@ -60,16 +63,22 @@ function toChild(id, isDirectory) {
   }
 }
 
-
 function updateFileName(item){
   item.isEdit=!item.isEdit
   updateNote(item).then(response => {
   });
 }
 
+function confirmEvent(e){
+  deleteFile(e)
+}
+
 function deleteFile(item){
   delNote(item.id).then(response => {
-
+    ElMessage({
+      message: '删除成功',
+      type: 'success',
+    })
   });
 }
 </script>
