@@ -13,10 +13,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="isFavorite"    column="is_favorite"    />
         <result property="isDeleted"    column="is_deleted"    />
         <result property="userId"    column="user_id"    />
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+        <result property="remark"       column="remark"       />
     </resultMap>
 
     <sql id="selectNoteVo">
-        select id, filename, is_directory, parent_id, is_top, is_favorite, is_deleted, user_id from note
+        select id, filename, is_directory, parent_id, is_top, is_favorite, is_deleted, user_id ,create_by, create_time,update_time,update_by, remark from note
     </sql>
 
     <select id="selectNoteList" parameterType="Note" resultMap="NoteResult">
