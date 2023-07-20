@@ -29,18 +29,25 @@
               <el-icon title="重命名" @click="item.isEdit=!item.isEdit" color="rgb(230,162,94)">
                 <Edit/>
               </el-icon>
-              <el-icon title="删除" color="#f56c6c">
-                <DeleteFilled/>
-              </el-icon>
+              <el-popconfirm title="Are you sure to delete this?">
+                <template #reference>
+                  <el-icon title="删除" color="#f56c6c" @click="deleteFile(item)">
+                    <DeleteFilled/>
+                  </el-icon>
+                </template>
+              </el-popconfirm>
+
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
   </el-scrollbar>
+
+
 </template>
 <script setup>
-import {updateNote} from "@/api/note/note";
+import {updateNote,delNote} from "@/api/note/note";
 
 const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
@@ -57,6 +64,12 @@ function toChild(id, isDirectory) {
 function updateFileName(item){
   item.isEdit=!item.isEdit
   updateNote(item).then(response => {
+  });
+}
+
+function deleteFile(item){
+  delNote(item.id).then(response => {
+
   });
 }
 </script>

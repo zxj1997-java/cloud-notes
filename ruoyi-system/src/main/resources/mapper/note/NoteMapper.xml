@@ -21,16 +21,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectNoteList" parameterType="Note" resultMap="NoteResult">
         <include refid="selectNoteVo"/>
-        <where>  
-            <if test="filename != null  and filename != ''"> and filename like concat('%', #{filename}, '%')</if>
-            <if test="isDirectory != null "> and is_directory = #{isDirectory}</if>
-            <if test="parentId == null"> and parent_id is null</if>
-            <if test="parentId != null "> and parent_id = #{parentId}</if>
-            <if test="isTop != null "> and is_top = #{isTop}</if>
-            <if test="isFavorite != null "> and is_favorite = #{isFavorite}</if>
-            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
-            <if test="userId != null "> and user_id = #{userId}</if>
-             order by is_directory desc
+        <where>
+            <if test="filename != null  and filename != ''">and filename like concat('%', #{filename}, '%')</if>
+            <if test="isDirectory != null ">and is_directory = #{isDirectory}</if>
+            <if test="parentId == null">and parent_id is null</if>
+            and ifnull(parent_id,'') = '' and ifnull(is_deleted,'')=''
+            <if test="isTop != null ">and is_top = #{isTop}</if>
+            <if test="isFavorite != null ">and is_favorite = #{isFavorite}</if>
+            <if test="isDeleted != null ">and is_deleted = #{isDeleted}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            order by is_directory desc
         </where>
     </select>
     
@@ -40,6 +40,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     <select id="findParentId" resultType="java.lang.Long">
         select parent_id from note where id = #{id}
+    </select>
+    <select id="findChildren" resultType="com.ruoyi.note.domain.Note">
+        select * from note where ifnull(is_deleted,'')='' and parent_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </select>
 
     <insert id="insertNote" parameterType="Note" useGeneratedKeys="true" keyProperty="id">
@@ -79,12 +85,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteNoteById" parameterType="Long">
-        delete from note where id = #{id}
+        update note set is_deleted=1 where id = #{id}
     </delete>
 
     <delete id="deleteNoteByIds" parameterType="String">
-        delete from note where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        update note set is_deleted=1 where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>

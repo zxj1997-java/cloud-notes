@@ -50,7 +50,7 @@ public interface INoteService
      * @param ids 需要删除的【请填写功能名称】主键集合
      * @return 结果
      */
-    public int deleteNoteByIds(Long[] ids);
+    public int deleteNoteByIds(List<Long> ids);
 
     /**
      * 删除【请填写功能名称】信息
@@ -66,4 +66,11 @@ public interface INoteService
      * @return
      */
     Long findParentId(Long id);
+
+    /**
+     * 查询子节点
+     * @param ids
+     * @return
+     */
+    List<Note> findChildren(List<Long> ids);
 }

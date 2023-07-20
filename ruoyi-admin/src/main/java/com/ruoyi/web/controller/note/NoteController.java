@@ -1,13 +1,19 @@
 package com.ruoyi.web.controller.note;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mchange.v1.identicator.IdList;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.note.domain.Note;
 import com.ruoyi.note.service.INoteService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -101,6 +107,19 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
-        return toAjax(noteService.deleteNoteByIds(ids));
+        List<Long> list = new ArrayList<>(Arrays.asList(ids));
+        list = findChildren(list);
+        return toAjax(noteService.deleteNoteByIds(list));
+    }
+
+    public List<Long> findChildren(List<Long> ids) {
+        List<Note> children = noteService.findChildren(ids);
+        if (CollectionUtils.isEmpty(children)) {
+            return ids;
+        } else {
+            List<Long> childIds = children.stream().map(Note::getId).collect(Collectors.toList());
+            ids.addAll(childIds);
+            return findChildren(childIds); // 添加 return 语句
+        }
     }
 }

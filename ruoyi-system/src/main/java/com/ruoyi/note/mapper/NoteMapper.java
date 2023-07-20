@@ -61,11 +61,18 @@ public interface NoteMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteNoteByIds(Long[] ids);
+    public int deleteNoteByIds(List<Long> ids);
     /**
      * 查询父节点id
      * @param id
      * @return
      */
     Long findParentId(Long id);
+    /**
+     * 查询子节点
+     *
+     * @param ids
+     * @return
+     */
+    List<Note> findChildren(List<Long> ids);
 }

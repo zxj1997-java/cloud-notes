@@ -70,7 +70,7 @@ public class NoteServiceImpl implements INoteService {
      * @return 结果
      */
     @Override
-    public int deleteNoteByIds(Long[] ids) {
+    public int deleteNoteByIds(List<Long> ids) {
         return noteMapper.deleteNoteByIds(ids);
     }
 
@@ -84,13 +84,26 @@ public class NoteServiceImpl implements INoteService {
     public int deleteNoteById(Long id) {
         return noteMapper.deleteNoteById(id);
     }
+
     /**
      * 查询父节点id
+     *
      * @param id
      * @return
      */
     @Override
     public Long findParentId(Long id) {
         return noteMapper.findParentId(id);
+    }
+
+    /**
+     * 查询子节点
+     *
+     * @param ids
+     * @return
+     */
+    @Override
+    public List<Note> findChildren(List<Long> ids) {
+        return noteMapper.findChildren(ids);
     }
 }
