@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isFavorite != null "> and is_favorite = #{isFavorite}</if>
             <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
+             order by is_directory desc
         </where>
     </select>
     
