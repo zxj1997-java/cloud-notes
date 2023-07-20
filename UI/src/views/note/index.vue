@@ -27,27 +27,27 @@ const text = ref('# Hello Editor');
 const theme = ref('light');
 
 const array = ref([
-  {title: "xxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxxxxxxxxxxxccxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxxxxxxxxxxxxxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxxxxxxxxx总结", date: "2020-20-01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxxxxxxxxxxxxxxxxx总结", date: "2020-20-01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "2020-20-01", isFolder: false, isEdit: false}]);
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "java后端总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "css前端总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "xxxxxxxxxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "Springboot SpringCloud JPA Mysql Vue总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
+  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false}]);
 
-function toggleTheme(res){
-  theme.value=res;
+function toggleTheme(res) {
+  theme.value = res;
 }
 
 /*保存数据*/
@@ -63,9 +63,14 @@ function onUploadImg(files, callback) {
 
 </script>
 <style scoped>
-#editmark{
+#editmark {
   height: 100%;
 }
+
+#editpreview {
+  height: 100%;
+}
+
 .floating-button-wrapper-right {
   position: fixed;
   bottom: 35px;
