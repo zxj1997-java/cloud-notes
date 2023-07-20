@@ -5,7 +5,7 @@
   <div class="floating-button-wrapper-right">
     <el-button class="floating-button-right" size="mini" @click="showPreview=!showPreview" icon="View" color="#e9e9eb"></el-button>
   </div>
-  <Drawer :array="array" :showDrawer="showDrawer" @toggleTheme="toggleTheme" @toggleDrawer="showDrawer = false"/>
+  <Drawer :showDrawer="showDrawer" @toggleTheme="toggleTheme" @toggleDrawer="showDrawer = false" @openFile="openFile"/>
   <MdEditor editorId="editmark" class="markedit" v-model="text" :preview="true" v-show="showPreview" @onSave="onSave" :theme="theme"
             @onUploadImg="onUploadImg"/>
   <MdPreview editorId="editpreview" class="markedit" v-model="text" :preview="true" v-show="!showPreview" :theme="theme"/>
@@ -26,25 +26,10 @@ const showPreview = ref(false);
 const text = ref('# Hello Editor');
 const theme = ref('light');
 
-const array = ref([
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "java后端总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "css前端总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "xxxxxxxxxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "Springboot SpringCloud JPA Mysql Vue总结", date: "20/20/01 12:01", isFolder: true, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false},
-  {title: "xxx总结", date: "20/20/01 12:01", isFolder: false, isEdit: false}]);
+
+//开打文件
+function openFile(id) {
+}
 
 function toggleTheme(res) {
   theme.value = res;
