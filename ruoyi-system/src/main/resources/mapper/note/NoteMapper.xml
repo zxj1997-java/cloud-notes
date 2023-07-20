@@ -30,7 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="filename != null  and filename != ''">and filename like concat('%', #{filename}, '%')</if>
             <if test="isDirectory != null ">and is_directory = #{isDirectory}</if>
             <if test="parentId == null">and parent_id is null</if>
-            and ifnull(parent_id,'') = '' and ifnull(is_deleted,'')=''
+            <if test="parentId != null">and parent_id = #{parentId}</if>
+            and ifnull(is_deleted,'')=''
             <if test="isTop != null ">and is_top = #{isTop}</if>
             <if test="isFavorite != null ">and is_favorite = #{isFavorite}</if>
             <if test="isDeleted != null ">and is_deleted = #{isDeleted}</if>
