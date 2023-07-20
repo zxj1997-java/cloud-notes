@@ -29,6 +29,7 @@ const theme = ref('light');
 
 //开打文件
 function openFile(id) {
+  console.log(id)
 }
 
 function toggleTheme(res) {

@@ -108,7 +108,7 @@ public class NoteController extends BaseController {
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         List<Long> list = new ArrayList<>(Arrays.asList(ids));
-        list = findChildren(list);
+        findChildren(list);
         return toAjax(noteService.deleteNoteByIds(list));
     }
 
