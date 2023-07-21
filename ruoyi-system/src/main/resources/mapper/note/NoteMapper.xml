@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.note.mapper.NoteMapper">
-    
+
     <resultMap type="Note" id="NoteResult">
-        <result property="id"    column="id"    />
-        <result property="filename"    column="filename"    />
-        <result property="isDirectory"    column="is_directory"    />
-        <result property="parentId"    column="parent_id"    />
-        <result property="isTop"    column="is_top"    />
-        <result property="isFavorite"    column="is_favorite"    />
-        <result property="isDeleted"    column="is_deleted"    />
-        <result property="userId"    column="user_id"    />
-        <result property="createBy"     column="create_by"    />
-        <result property="createTime"   column="create_time"  />
-        <result property="updateBy"     column="update_by"    />
-        <result property="updateTime"   column="update_time"  />
-        <result property="remark"       column="remark"       />
+        <result property="id" column="id"/>
+        <result property="filename" column="filename"/>
+        <result property="isDirectory" column="is_directory"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="isTop" column="is_top"/>
+        <result property="isFavorite" column="is_favorite"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="userId" column="user_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
     </resultMap>
 
     <sql id="selectNoteVo">
-        select id, filename, is_directory, parent_id, is_top, is_favorite, is_deleted, user_id ,create_by, create_time,update_time,update_by, remark from note
+        select id,
+               filename,
+               is_directory,
+               parent_id,
+               is_top,
+               is_favorite,
+               is_deleted,
+               user_id,
+               create_by,
+               create_time,
+               update_time,
+               update_by,
+               remark
+        from note
     </sql>
 
     <select id="selectNoteList" parameterType="Note" resultMap="NoteResult">
@@ -31,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isDirectory != null ">and is_directory = #{isDirectory}</if>
             <if test="parentId == null">and parent_id is null</if>
             <if test="parentId != null">and parent_id = #{parentId}</if>
-            and ifnull(is_deleted,'')=''
+            and ifnull(is_deleted,0)!=1
             <if test="isTop != null ">and is_top = #{isTop}</if>
             <if test="isFavorite != null ">and is_favorite = #{isFavorite}</if>
             <if test="isDeleted != null ">and is_deleted = #{isDeleted}</if>
@@ -39,13 +52,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             order by is_directory desc
         </where>
     </select>
-    
+
     <select id="selectNoteById" parameterType="Long" resultMap="NoteResult">
         <include refid="selectNoteVo"/>
         where id = #{id}
     </select>
     <select id="findParentId" resultType="java.lang.Long">
-        select parent_id from note where id = #{id}
+        select parent_id
+        from note
+        where id = #{id}
     </select>
     <select id="findChildren" resultType="com.ruoyi.note.domain.Note">
         select * from note where ifnull(is_deleted,'')='' and parent_id in
@@ -64,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isFavorite != null">is_favorite,</if>
             <if test="isDeleted != null">is_deleted,</if>
             <if test="userId != null">user_id,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="filename != null and filename != ''">#{filename},</if>
             <if test="isDirectory != null">#{isDirectory},</if>
@@ -73,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isFavorite != null">#{isFavorite},</if>
             <if test="isDeleted != null">#{isDeleted},</if>
             <if test="userId != null">#{userId},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateNote" parameterType="Note">
@@ -91,7 +106,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteNoteById" parameterType="Long">
-        update note set is_deleted=1 where id = #{id}
+        update note
+        set is_deleted=1
+        where id = #{id}
     </delete>
 
     <delete id="deleteNoteByIds" parameterType="String">

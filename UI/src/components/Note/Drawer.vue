@@ -1,15 +1,15 @@
 <template>
-  <el-drawer direction="ltr" v-model="props.showDrawer" @close="emits('toggleDrawer')" :size="400" :show-close="false" :z-index="100000">
+  <el-drawer v-model="props.showDrawer" :show-close="false" :size="400" :z-index="100000" direction="ltr" @close="emits('toggleDrawer')">
     <template #header="{ close, titleId, titleClass }">
       <el-row>
-        <el-button type="primary" icon="CaretLeft" @click="toParent">上级目录</el-button>
-        <el-button type="primary" icon="Upload" @click="dialogVisible = true">导入</el-button>
-        <el-button type="warning" :icon="iconShow" circle @click="toggleTheme"/>
+        <el-button icon="CaretLeft" type="primary" @click="toParent">上级目录</el-button>
+        <el-button icon="Upload" type="primary" @click="dialogVisible = true">导入</el-button>
+        <el-button :icon="iconShow" circle type="warning" @click="toggleTheme"/>
       </el-row>
     </template>
-    <FileFolder :array="array" @toChild="toChild" @openFile="openFile"/>
+    <FileFolder v-if="array" :array="array" @openFile="openFile" @toChild="toChild"/>
     <el-dialog v-model="dialogVisible" title="文件导入">
-      <el-upload class="upload-demo" drag action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" multiple>
+      <el-upload action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" class="upload-demo" drag multiple>
         <el-icon class="el-icon--upload">
           <upload-filled/>
         </el-icon>
@@ -31,7 +31,7 @@
   </el-drawer>
 </template>
 <script setup>
-import {ref, computed} from 'vue';
+import {computed, ref} from 'vue';
 import FileFolder from './FileFolder.vue';
 import {childListNote, parentListNote} from "@/api/note/note";
 
@@ -47,8 +47,8 @@ function searchList(params) {
   childListNote(params).then(response => {
     let data = response.rows;
     for (let row of data) {
-      row.isDeleted=false;
-      row.isEdit=false;
+      row.isDeleted = 0;
+      row.isEdit = false;
     }
     array.value = data;
   });
@@ -68,8 +68,8 @@ const toggleTheme = () => {
 //上级目录
 function toParent() {
   parentListNote({id: currNodeId.value}).then(response => {
-    array.value = response.rows;
     currNodeId.value = response.rows[0].parentId;
+    array.value = response.rows;
   });
 }
 

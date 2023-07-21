@@ -1,13 +1,13 @@
 <template>
   <el-scrollbar height="100%">
     <template v-for="item in props.array">
-      <el-row v-if="!item.isDeleted">
+      <el-row v-if="item.isDeleted==0">
         <el-col :span="24">
           <el-card shadow="always">
             <div class="inlineblock pointer" style="width: 7%" @click="toChild(item.id,item.isDirectory)">
               <el-icon style="vertical-align: middle">
-                <Folder v-if="item.isDirectory"/>
-                <Document v-if="!item.isDirectory"/>
+                <Folder v-if="item.isDirectory==1"/>
+                <Document v-if="item.isDirectory==0"/>
               </el-icon>&nbsp;
             </div>
             <div class="inlineblock pointer" style="width: 57%">
@@ -28,19 +28,19 @@
               <el-text class="mx-1" size="small" style="font-size: 11px" v-text="item.updateTime"></el-text>
               <div style="margin-top: 10px">
                 <el-space :size="10" wrap>
-                  <el-icon v-if="item.isDirectory" class="pointer" color="rgb(103,194,58)" title="新增文件">
+                  <el-icon v-if="item.isDirectory==1" class="pointer" color="rgb(103,194,58)" title="新增文件">
                     <DocumentAdd/>
                   </el-icon>
-                  <el-icon v-if="item.isDirectory" class="pointer" color="rgb(103,194,58)" title="新增">
+                  <el-icon v-if="item.isDirectory==1" class="pointer" color="rgb(103,194,58)" title="新增">
                     <FolderOpened/>
                   </el-icon>
                   <el-icon class="pointer" color="rgb(230,162,94)" title="重命名" @click="item.isEdit=!item.isEdit">
                     <Edit/>
                   </el-icon>
-                  <el-popconfirm :visible="popconfirm" title="确认要删除吗?" trigger="click"
+                  <el-popconfirm :visible="item.popconfirm" title="确认要删除吗?" trigger="click"
                                  @confirm="confirmEvent(item)">
                     <template #reference>
-                      <el-icon class="pointer" color="#f56c6c" title="删除" @click="popconfirm=true">
+                      <el-icon class="pointer" color="#f56c6c" title="删除" @click="item.popconfirm=true">
                         <DeleteFilled/>
                       </el-icon>
                     </template>
@@ -57,12 +57,10 @@
 <script setup>
 import {delNote, updateNote} from "@/api/note/note";
 import {ElMessage} from "element-plus";
-import {ref} from "vue";
 
 const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
 
-const popconfirm = ref(false);
 
 function toChild(id, isDirectory) {
   if (isDirectory) {
@@ -75,6 +73,10 @@ function toChild(id, isDirectory) {
 function updateFileName(item) {
   item.isEdit = !item.isEdit
   updateNote(item).then(response => {
+    ElMessage({
+      message: '修改成功',
+      type: 'success',
+    })
   });
 }
 
@@ -88,7 +90,7 @@ function deleteFile(item) {
       message: '删除成功',
       type: 'success',
     })
-    item.isDeleted = true;
+    item.isDeleted = 1;
   });
 }
 </script>
