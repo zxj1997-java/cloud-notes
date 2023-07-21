@@ -97,10 +97,10 @@ INSERT INTO `gen_table_column` VALUES (8, '1', 'user_id', NULL, 'bigint(50)', 'L
 -- ----------------------------
 DROP TABLE IF EXISTS `note`;
 CREATE TABLE `note`  (
-  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(50) NOT NULL AUTO_INCREMENT,
   `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `is_directory` int(11) NULL DEFAULT NULL,
-  `parent_id` int(11) NULL DEFAULT NULL,
+  `parent_id` varchar(50) NULL DEFAULT NULL,
   `is_top` int(11) NULL DEFAULT NULL,
   `is_favorite` int(11) NULL DEFAULT NULL,
   `is_deleted` int(11) NULL DEFAULT NULL,
@@ -116,10 +116,10 @@ CREATE TABLE `note`  (
 -- ----------------------------
 -- Records of note
 -- ----------------------------
-INSERT INTO `note` VALUES (1, '后端总结11222', 1, NULL, NULL, NULL, NULL, NULL, '', '2023-07-20 20:20:03', '', '2023-07-20 20:20:03', '');
-INSERT INTO `note` VALUES (4, 'Java基础知识', 0, 1, NULL, NULL, NULL, NULL, '', '2023-07-20 20:20:03', '', '2023-07-20 20:20:03', '');
-INSERT INTO `note` VALUES (5, 'springboot', 0, 1, NULL, NULL, NULL, NULL, '', '2023-07-20 20:20:03', '', '2023-07-20 20:20:03', '');
-INSERT INTO `note` VALUES (6, '工具集', 1, 1, NULL, NULL, NULL, NULL, '', '2023-07-20 20:20:03', '', '2023-07-20 20:20:03', '');
+INSERT INTO `note` VALUES ('1', '后端总结11222', 1, NULL, NULL, NULL, NULL, NULL, '', '2023-07-20 20:20:03', '', '2023-07-20 20:20:03', '');
+INSERT INTO `note` VALUES ('4', 'Java基础知识', 0, '1', NULL, NULL, NULL, NULL, '', '2023-07-20 20:20:03', '', '2023-07-20 20:20:03', '');
+INSERT INTO `note` VALUES ('5', 'springboot', 0, '1', NULL, NULL, NULL, NULL, '', '2023-07-20 20:20:03', '', '2023-07-20 20:20:03', '');
+INSERT INTO `note` VALUES ('6', '工具集', 1, 1, NULL, NULL, NULL, NULL, '', '2023-07-20 20:20:03', '', '2023-07-20 20:20:03', '');
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
