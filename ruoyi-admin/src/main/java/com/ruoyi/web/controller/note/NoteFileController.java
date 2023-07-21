@@ -21,7 +21,6 @@ public class NoteFileController {
 
     @PostMapping
     public NoteFile save(@RequestBody NoteFile note) {
-        System.err.println(note);
         Date date = new Date();
         note.setCreateTime(date);
         note.setUpdateTime(date);
@@ -39,7 +38,6 @@ public class NoteFileController {
     @GetMapping("/{id}")
     public NoteFile findById(@PathVariable String id) {
         NoteFile noteFile = repository.findById(id).orElse(null);
-        System.err.println(noteFile);
         return noteFile;
     }
 
