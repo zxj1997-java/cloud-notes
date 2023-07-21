@@ -4,13 +4,13 @@
       <el-row v-if="!item.isDeleted">
         <el-col :span="24">
           <el-card shadow="always">
-            <div class="inlineblock" style="width: 7%" @click="toChild(item.id,item.isDirectory)">
+            <div class="inlineblock pointer" style="width: 7%" @click="toChild(item.id,item.isDirectory)">
               <el-icon style="vertical-align: middle">
                 <Folder v-if="item.isDirectory"/>
                 <Document v-if="!item.isDirectory"/>
               </el-icon>&nbsp;
             </div>
-            <div class="inlineblock" style="width: 57%">
+            <div class="inlineblock pointer" style="width: 57%">
               <el-input v-if="item.isEdit" v-model="item.filename" class="titleInput" placeholder="重输入文件名"
                         size="small"
                         @blur="updateFileName(item)">
@@ -28,19 +28,19 @@
               <el-text class="mx-1" size="small" style="font-size: 11px" v-text="item.updateTime"></el-text>
               <div style="margin-top: 10px">
                 <el-space :size="10" wrap>
-                  <el-icon v-if="item.isDirectory" color="rgb(103,194,58)" title="新增文件">
+                  <el-icon v-if="item.isDirectory" class="pointer" color="rgb(103,194,58)" title="新增文件">
                     <DocumentAdd/>
                   </el-icon>
-                  <el-icon v-if="item.isDirectory" color="rgb(103,194,58)" title="新增">
+                  <el-icon v-if="item.isDirectory" class="pointer" color="rgb(103,194,58)" title="新增">
                     <FolderOpened/>
                   </el-icon>
-                  <el-icon color="rgb(230,162,94)" title="重命名" @click="item.isEdit=!item.isEdit">
+                  <el-icon class="pointer" color="rgb(230,162,94)" title="重命名" @click="item.isEdit=!item.isEdit">
                     <Edit/>
                   </el-icon>
                   <el-popconfirm :visible="popconfirm" title="确认要删除吗?" trigger="click"
                                  @confirm="confirmEvent(item)">
                     <template #reference>
-                      <el-icon color="#f56c6c" title="删除" @click="popconfirm=true">
+                      <el-icon class="pointer" color="#f56c6c" title="删除" @click="popconfirm=true">
                         <DeleteFilled/>
                       </el-icon>
                     </template>
@@ -103,6 +103,10 @@ function deleteFile(item) {
 
 .el-text.is-truncated {
   max-width: 60% !important;
+}
+
+.pointer:hover {
+  cursor: pointer;
 }
 
 >>> .el-card__body {
