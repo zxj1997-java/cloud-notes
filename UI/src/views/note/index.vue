@@ -12,24 +12,31 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
 
 const showDrawer = ref(false);
-const showPreview = ref(false);
+const showPreview = ref(true);
 const text = ref('# Hello Editor');
 const theme = ref('light');
 
+onMounted(() => {
+  let localTheme = localStorage.getItem('cloud-note-theme');
+  if (localTheme) {
+    theme.value = localTheme;
+  }
+})
+
+function toggleTheme(res) {
+  theme.value = res;
+  localStorage.setItem('cloud-note-theme', res);
+}
 
 //开打文件
 function openFile(id) {
   text.value = id;
-}
-
-function toggleTheme(res) {
-  theme.value = res;
 }
 
 /*保存数据*/

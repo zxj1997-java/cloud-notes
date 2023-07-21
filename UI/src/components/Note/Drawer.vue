@@ -39,7 +39,7 @@
   </el-drawer>
 </template>
 <script setup>
-import {computed, ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import FileFolder from './FileFolder.vue';
 import {addNote, childListNote, parentListNote} from "@/api/note/note";
 
@@ -48,7 +48,7 @@ const emits = defineEmits(['toggleTheme', 'toggleDrawer', 'openFile']);
 const theme = ref('light');
 const dialogVisible = ref(false);
 const currNodeId = ref(null);
-
+const iconShow = ref("Sunny");
 const array = ref(null);
 
 function addNoteFun(isDirectory) {
@@ -77,15 +77,6 @@ function searchList(params) {
 
 searchList({parentId: currNodeId.value});
 
-const iconShow = computed(() => {
-  return theme.value === 'light' ? 'Sunny' : 'Moon';
-});
-
-const toggleTheme = () => {
-  theme.value = theme.value === 'light' ? 'dark' : 'light';
-  emits('toggleTheme', theme.value);
-};
-
 //上级目录
 function toParent() {
   parentListNote({id: currNodeId.value}).then(response => {
@@ -104,6 +95,20 @@ function openFile(id) {
   emits('openFile', id);
 }
 
+const toggleTheme = () => {
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
+  iconShow.value = theme.value === 'light' ? 'Sunny' : 'Moon';
+  emits('toggleTheme', theme.value);
+};
+
+
+onMounted(() => {
+  let localTheme = localStorage.getItem('cloud-note-theme');
+  if (localTheme) {
+    console.log(localTheme)
+    iconShow.value = localTheme === 'light' ? 'Sunny' : 'Moon';
+  }
+})
 </script>
 <style scoped>
 
