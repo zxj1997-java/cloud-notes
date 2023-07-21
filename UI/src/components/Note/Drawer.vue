@@ -7,10 +7,10 @@
         <el-button :icon="iconShow" circle type="warning" @click="toggleTheme"/>
       </el-row>
       <el-space :size="10" wrap>
-        <el-icon class="pointer" color="rgb(103,194,58)" title="新增">
+        <el-icon class="pointer" color="rgb(103,194,58)" title="新增文件夹" @click="addNoteFun(1)">
           <FolderOpened/>
         </el-icon>
-        <el-icon class="pointer" color="rgb(103,194,58)" title="新增文件">
+        <el-icon class="pointer" color="rgb(103,194,58)" title="新增文件" @click="addNoteFun(0)">
           <DocumentAdd/>
         </el-icon>
       </el-space>
@@ -41,7 +41,7 @@
 <script setup>
 import {computed, ref} from 'vue';
 import FileFolder from './FileFolder.vue';
-import {childListNote, parentListNote} from "@/api/note/note";
+import {addNote, childListNote, parentListNote} from "@/api/note/note";
 
 const props = defineProps(['showDrawer']);
 const emits = defineEmits(['toggleTheme', 'toggleDrawer', 'openFile']);
@@ -50,6 +50,20 @@ const dialogVisible = ref(false);
 const currNodeId = ref(null);
 
 const array = ref(null);
+
+function addNoteFun(isDirectory) {
+  let note = {
+    filename: "未命名",
+    isDirectory: isDirectory,
+    parentId: currNodeId.value
+  }
+  addNote(note).then(response => {
+    let newNote = response.data;
+    newNote.isEdit = true;
+    array.value.unshift(newNote);
+  })
+}
+
 
 function searchList(params) {
   childListNote(params).then(response => {

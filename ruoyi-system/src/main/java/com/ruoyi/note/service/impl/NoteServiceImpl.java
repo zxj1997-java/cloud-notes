@@ -1,12 +1,12 @@
 package com.ruoyi.note.service.impl;
 
-import java.util.List;
-
 import com.ruoyi.note.domain.Note;
 import com.ruoyi.note.mapper.NoteMapper;
 import com.ruoyi.note.service.INoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -26,7 +26,7 @@ public class NoteServiceImpl implements INoteService {
      * @return 【请填写功能名称】
      */
     @Override
-    public Note selectNoteById(Long id) {
+    public Note selectNoteById(String id) {
         return noteMapper.selectNoteById(id);
     }
 
@@ -70,7 +70,7 @@ public class NoteServiceImpl implements INoteService {
      * @return 结果
      */
     @Override
-    public int deleteNoteByIds(List<Long> ids) {
+    public int deleteNoteByIds(List<String> ids) {
         return noteMapper.deleteNoteByIds(ids);
     }
 
@@ -81,7 +81,7 @@ public class NoteServiceImpl implements INoteService {
      * @return 结果
      */
     @Override
-    public int deleteNoteById(Long id) {
+    public int deleteNoteById(String id) {
         return noteMapper.deleteNoteById(id);
     }
 
@@ -92,7 +92,7 @@ public class NoteServiceImpl implements INoteService {
      * @return
      */
     @Override
-    public Long findParentId(Long id) {
+    public String findParentId(String id) {
         return noteMapper.findParentId(id);
     }
 
@@ -103,7 +103,7 @@ public class NoteServiceImpl implements INoteService {
      * @return
      */
     @Override
-    public List<Note> findChildren(List<Long> ids) {
+    public List<Note> findChildren(List<String> ids) {
         return noteMapper.findChildren(ids);
     }
 }

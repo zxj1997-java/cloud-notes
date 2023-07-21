@@ -53,11 +53,11 @@
         </where>
     </select>
 
-    <select id="selectNoteById" parameterType="Long" resultMap="NoteResult">
+    <select id="selectNoteById" parameterType="String" resultMap="NoteResult">
         <include refid="selectNoteVo"/>
         where id = #{id}
     </select>
-    <select id="findParentId" resultType="java.lang.Long">
+    <select id="findParentId" resultType="java.lang.String">
         select parent_id
         from note
         where id = #{id}
@@ -72,6 +72,7 @@
     <insert id="insertNote" parameterType="Note" useGeneratedKeys="true" keyProperty="id">
         insert into note
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
             <if test="filename != null and filename != ''">filename,</if>
             <if test="isDirectory != null">is_directory,</if>
             <if test="parentId != null">parent_id,</if>
@@ -81,6 +82,7 @@
             <if test="userId != null">user_id,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
             <if test="filename != null and filename != ''">#{filename},</if>
             <if test="isDirectory != null">#{isDirectory},</if>
             <if test="parentId != null">#{parentId},</if>
@@ -105,7 +107,7 @@
         where id = #{id}
     </update>
 
-    <delete id="deleteNoteById" parameterType="Long">
+    <delete id="deleteNoteById" parameterType="String">
         update note
         set is_deleted=1
         where id = #{id}

@@ -1,135 +1,141 @@
 package com.ruoyi.note.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 【请填写功能名称】对象 note
- * 
+ *
  * @author ruoyi
  * @date 2023-07-20
  */
-public class Note extends BaseEntity
-{
+public class Note extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    /**  */
-    private Long id;
+    /**
+     *
+     */
+    private String id;
 
-    /**  */
+    /**
+     *
+     */
     @Excel(name = "")
     private String filename;
 
-    /**  */
+    /**
+     *
+     */
     @Excel(name = "")
     private Long isDirectory;
 
-    /**  */
+    /**
+     *
+     */
     @Excel(name = "")
-    private Long parentId;
+    private String parentId;
 
-    /**  */
+    /**
+     *
+     */
     @Excel(name = "")
     private Long isTop;
 
-    /**  */
+    /**
+     *
+     */
     @Excel(name = "")
     private Long isFavorite;
 
-    /**  */
+    /**
+     *
+     */
     @Excel(name = "")
     private Long isDeleted;
 
-    /** $column.columnComment */
+    /**
+     * $column.columnComment
+     */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Long userId;
 
-    public void setId(Long id) 
-    {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getId() 
-    {
-        return id;
+    public String getFilename() {
+        return filename;
     }
-    public void setFilename(String filename) 
-    {
+
+    public void setFilename(String filename) {
         this.filename = filename;
     }
 
-    public String getFilename() 
-    {
-        return filename;
+    public Long getIsDirectory() {
+        return isDirectory;
     }
-    public void setIsDirectory(Long isDirectory) 
-    {
+
+    public void setIsDirectory(Long isDirectory) {
         this.isDirectory = isDirectory;
     }
 
-    public Long getIsDirectory() 
-    {
-        return isDirectory;
+    public String getParentId() {
+        return parentId;
     }
-    public void setParentId(Long parentId) 
-    {
+
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
-    public Long getParentId() 
-    {
-        return parentId;
+    public Long getIsTop() {
+        return isTop;
     }
-    public void setIsTop(Long isTop) 
-    {
+
+    public void setIsTop(Long isTop) {
         this.isTop = isTop;
     }
 
-    public Long getIsTop() 
-    {
-        return isTop;
+    public Long getIsFavorite() {
+        return isFavorite;
     }
-    public void setIsFavorite(Long isFavorite) 
-    {
+
+    public void setIsFavorite(Long isFavorite) {
         this.isFavorite = isFavorite;
     }
 
-    public Long getIsFavorite() 
-    {
-        return isFavorite;
+    public Long getIsDeleted() {
+        return isDeleted;
     }
-    public void setIsDeleted(Long isDeleted) 
-    {
+
+    public void setIsDeleted(Long isDeleted) {
         this.isDeleted = isDeleted;
     }
 
-    public Long getIsDeleted() 
-    {
-        return isDeleted;
-    }
-    public void setUserId(Long userId) 
-    {
-        this.userId = userId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public Long getUserId() 
-    {
-        return userId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("filename", getFilename())
-            .append("isDirectory", getIsDirectory())
-            .append("parentId", getParentId())
-            .append("isTop", getIsTop())
-            .append("isFavorite", getIsFavorite())
-            .append("isDeleted", getIsDeleted())
-            .append("userId", getUserId())
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("id", getId())
+                .append("filename", getFilename())
+                .append("isDirectory", getIsDirectory())
+                .append("parentId", getParentId())
+                .append("isTop", getIsTop())
+                .append("isFavorite", getIsFavorite())
+                .append("isDeleted", getIsDeleted())
+                .append("userId", getUserId())
+                .toString();
     }
 }

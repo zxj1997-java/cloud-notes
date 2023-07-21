@@ -1,34 +1,20 @@
 package com.ruoyi.web.controller.note;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletResponse;
-
-import com.mchange.v1.identicator.IdList;
-import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.note.domain.Note;
 import com.ruoyi.note.service.INoteService;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 【请填写功能名称】Controller
@@ -57,7 +43,7 @@ public class NoteController extends BaseController {
      */
     @GetMapping("/parents")
     public TableDataInfo parents(Note note) {
-        Long parent = noteService.findParentId(note.getId());
+        String parent = noteService.findParentId(note.getId());
         note.setParentId(parent);
         note.setId(null);
         List<Note> list = noteService.selectNoteList(note);
@@ -79,7 +65,7 @@ public class NoteController extends BaseController {
      * 获取【请填写功能名称】详细信息
      */
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id) {
+    public AjaxResult getInfo(@PathVariable("id") String id) {
         return success(noteService.selectNoteById(id));
     }
 
@@ -89,7 +75,13 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Note note) {
-        return toAjax(noteService.insertNote(note));
+        Date date = new Date();
+        note.setId(UUID.randomUUID().toString());
+        note.setIsDeleted(0L);
+        note.setCreateTime(date);
+        note.setUpdateTime(date);
+        noteService.insertNote(note);
+        return success(note);
     }
 
     /**
@@ -106,18 +98,18 @@ public class NoteController extends BaseController {
      */
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids) {
-        List<Long> list = new ArrayList<>(Arrays.asList(ids));
+    public AjaxResult remove(@PathVariable String[] ids) {
+        List<String> list = new ArrayList<>(Arrays.asList(ids));
         findChildren(list);
         return toAjax(noteService.deleteNoteByIds(list));
     }
 
-    public List<Long> findChildren(List<Long> ids) {
+    public List<String> findChildren(List<String> ids) {
         List<Note> children = noteService.findChildren(ids);
         if (CollectionUtils.isEmpty(children)) {
             return ids;
         } else {
-            List<Long> childIds = children.stream().map(Note::getId).collect(Collectors.toList());
+            List<String> childIds = children.stream().map(Note::getId).collect(Collectors.toList());
             ids.addAll(childIds);
             return findChildren(childIds); // 添加 return 语句
         }
