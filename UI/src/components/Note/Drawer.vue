@@ -115,7 +115,6 @@ const toggleTheme = () => {
 onMounted(() => {
   let localTheme = localStorage.getItem('cloud-note-theme');
   if (localTheme) {
-    console.log(localTheme)
     iconShow.value = localTheme === 'light' ? 'Sunny' : 'Moon';
   }
 })

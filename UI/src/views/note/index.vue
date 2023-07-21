@@ -21,7 +21,7 @@ import {getNoteFile, saveNoteFile} from "@/api/note/notefile";
 const showDrawer = ref(false);
 const showPreview = ref(true);
 const theme = ref('light');
-const noteFile = ref(null);
+const noteFile = ref({});
 
 onMounted(() => {
   let localTheme = localStorage.getItem('cloud-note-theme');
@@ -44,10 +44,14 @@ function openFile(fileId) {
 
 /*保存数据*/
 function onSave(value, html) {
-  noteFile.content = value;
-  noteFile.html = html;
-  saveNoteFile(noteFile).then(response => {
-  })
+  html.then(obj => {
+    noteFile.value.content = value;
+    noteFile.value.html = obj;
+    saveNoteFile(noteFile.value).then(response => {
+    })
+  }).catch(error => {
+    console.error(error);
+  });
 }
 
 /*图片上传*/
