@@ -10,35 +10,42 @@
                 <Document v-if="!item.isDirectory"/>
               </el-icon>&nbsp;
             </div>
-            <div class="inlineblock" style="width: 67%">
-              <el-input class="titleInput" v-show="item.isEdit" v-model="item.filename" size="small" @blur="updateFileName(item)"
-                        placeholder="重输入文件名">
+            <div class="inlineblock" style="width: 57%">
+              <el-input v-if="item.isEdit" v-model="item.filename" class="titleInput" placeholder="重输入文件名"
+                        size="small"
+                        @blur="updateFileName(item)">
                 <template #suffix>
                   <el-icon class="el-input__icon" @click="item.isEdit=!item.isEdit">
                     <Check/>
                   </el-icon>
                 </template>
               </el-input>
-              <el-text @click="toChild(item.id,item.isDirectory)" style="font-size: 13px" v-show="!item.isEdit" class="mx-1" size="small" v-text="item.filename"
-                       truncated></el-text>&nbsp;
+              <el-text v-show="!item.isEdit" class="mx-1" size="small"
+                       style="font-size: 13px" truncated @click="toChild(item.id,item.isDirectory)"
+                       v-text="item.filename"></el-text>&nbsp;
             </div>
-            <div class="inlineblock" style="width: 26%">
-              <el-text class="mx-1" size="small" v-text="item.updateTime" style="font-size: 11px"></el-text>
+            <div class="inlineblock" style="width: 36%">
+              <el-text class="mx-1" size="small" style="font-size: 11px" v-text="item.updateTime"></el-text>
               <div style="margin-top: 10px">
-                <el-icon v-if="item.isDirectory" title="新增" color="rgb(103,194,58)">
-                  <CirclePlusFilled/>
-                </el-icon>
-                <el-icon title="重命名" @click="item.isEdit=!item.isEdit" color="rgb(230,162,94)">
-                  <Edit/>
-                </el-icon>
-                <el-popconfirm trigger="click" title="确认要删除吗?" :visible="popconfirm" @confirm="confirmEvent(item)">
-                  <template #reference>
-                    <el-icon title="删除" color="#f56c6c" @click="popconfirm=true">
-                      <DeleteFilled/>
-                    </el-icon>
-                  </template>
-                </el-popconfirm>
-
+                <el-space :size="10" wrap>
+                  <el-icon v-if="item.isDirectory" color="rgb(103,194,58)" title="新增文件">
+                    <DocumentAdd/>
+                  </el-icon>
+                  <el-icon v-if="item.isDirectory" color="rgb(103,194,58)" title="新增">
+                    <FolderOpened/>
+                  </el-icon>
+                  <el-icon color="rgb(230,162,94)" title="重命名" @click="item.isEdit=!item.isEdit">
+                    <Edit/>
+                  </el-icon>
+                  <el-popconfirm :visible="popconfirm" title="确认要删除吗?" trigger="click"
+                                 @confirm="confirmEvent(item)">
+                    <template #reference>
+                      <el-icon color="#f56c6c" title="删除" @click="popconfirm=true">
+                        <DeleteFilled/>
+                      </el-icon>
+                    </template>
+                  </el-popconfirm>
+                </el-space>
               </div>
             </div>
           </el-card>
@@ -48,7 +55,7 @@
   </el-scrollbar>
 </template>
 <script setup>
-import {updateNote, delNote} from "@/api/note/note";
+import {delNote, updateNote} from "@/api/note/note";
 import {ElMessage} from "element-plus";
 import {ref} from "vue";
 
@@ -96,5 +103,10 @@ function deleteFile(item) {
 
 .el-text.is-truncated {
   max-width: 60% !important;
+}
+
+>>> .el-card__body {
+  display: flex;
+  align-items: center;
 }
 </style>
