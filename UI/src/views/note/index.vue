@@ -69,6 +69,7 @@ function onSave(value, html) {
 
 /*图片上传*/
 function onUploadImg(files, callback) {
+  console.log(files)
   callback(["https://img2.woyaogexing.com/2023/07/18/e853805e9abd3fc22a4e3dfec0c62ee3.jpg"]);
 }
 

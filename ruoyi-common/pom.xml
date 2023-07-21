@@ -132,6 +132,12 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
+        <!--阿里云oss-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.13.1</version>
+        </dependency>
     </dependencies>
 
 </project>
