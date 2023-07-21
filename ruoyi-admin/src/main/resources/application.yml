@@ -136,7 +136,7 @@ xss:
 
 
 oss:
-  endpoint:
-  accessKeyId:
-  accessKeySecret:
+  endpoint: xx
+  accessKeyId: xxx
+  accessKeySecret: xxx
 

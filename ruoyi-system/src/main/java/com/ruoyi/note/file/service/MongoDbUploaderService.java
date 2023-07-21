@@ -8,18 +8,27 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 @Component
 public class MongoDbUploaderService {
     @Autowired
     private FileRepository fileRepository;
 
-    public void upload(InputStream inputStream, String fileName, String contentType) throws IOException {
+    public FileEntity upload(InputStream inputStream, String fileName, String contentType) throws IOException {
         byte[] content = IOUtils.toByteArray(inputStream);
         FileEntity file = new FileEntity();
         file.setName(fileName);
         file.setContentType(contentType);
         file.setContent(content);
-        fileRepository.save(file);
+        return fileRepository.save(file);
+    }
+
+    public FileEntity download(String fileId) throws IOException {
+        Optional<FileEntity> optionalFile = fileRepository.findById(fileId);
+        if (optionalFile.isPresent()) {
+            return optionalFile.get();
+        }
+        return null;
     }
 }

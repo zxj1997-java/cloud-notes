@@ -16,7 +16,7 @@ import {onMounted, ref} from 'vue';
 import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
-import {getNoteFile, saveNoteFile} from "@/api/note/notefile";
+import {getNoteFile, saveNoteFile, uploadFile} from "@/api/note/notefile";
 import {ElMessage, ElNotification} from "element-plus";
 
 const showDrawer = ref(false);
@@ -69,8 +69,14 @@ function onSave(value, html) {
 
 /*图片上传*/
 function onUploadImg(files, callback) {
-  console.log(files)
-  callback(["https://img2.woyaogexing.com/2023/07/18/e853805e9abd3fc22a4e3dfec0c62ee3.jpg"]);
+  let formData = new FormData();
+  for (let i = 0; i < files.length; i++) {
+    formData.append('files', files[i]);
+  }
+  uploadFile(formData).then(response => {
+    let url = "/notefile/image/" + response;
+    callback([url])
+  })
 }
 
 </script>

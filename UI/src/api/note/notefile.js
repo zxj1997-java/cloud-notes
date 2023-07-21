@@ -24,3 +24,23 @@ export function delNote(id) {
         method: 'delete'
     })
 }
+
+// 删除【请填写功能名称】
+export function uploadFile(data) {
+    return request({
+        url: '/notefile/upload',
+        method: 'post',
+        data: data
+    })
+}
+
+export function downloadFile(id) {
+    return request({
+        url: '/notefile/image/' + id,
+        method: 'get',
+    })
+}
+
+
+
+
