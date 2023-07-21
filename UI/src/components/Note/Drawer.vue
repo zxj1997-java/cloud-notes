@@ -45,7 +45,12 @@ const array = ref(null);
 
 function searchList(params) {
   childListNote(params).then(response => {
-    array.value = response.rows;
+    let data = response.rows;
+    for (let row of data) {
+      row.isDeleted=false;
+      row.isEdit=false;
+    }
+    array.value = data;
   });
 }
 
