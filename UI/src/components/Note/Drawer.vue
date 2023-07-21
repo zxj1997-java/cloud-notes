@@ -42,6 +42,7 @@
 import {onMounted, ref} from 'vue';
 import FileFolder from './FileFolder.vue';
 import {addNote, childListNote, parentListNote} from "@/api/note/note";
+import {saveNoteFile} from "@/api/note/notefile";
 
 const props = defineProps(['showDrawer']);
 const emits = defineEmits(['toggleTheme', 'toggleDrawer', 'openFile']);
@@ -61,6 +62,15 @@ function addNoteFun(isDirectory) {
     let newNote = response.data;
     newNote.isEdit = true;
     array.value.unshift(newNote);
+
+    if (isDirectory == 0) {
+      let noteFile = {
+        id: newNote.id,
+        title: newNote.filename
+      }
+      saveNoteFile(noteFile).then(response => {
+      })
+    }
   })
 }
 

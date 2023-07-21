@@ -6,9 +6,9 @@
     <el-button class="floating-button-right" color="#e9e9eb" icon="View" size="mini" @click="showPreview=!showPreview"></el-button>
   </div>
   <Drawer :showDrawer="showDrawer" @openFile="openFile" @toggleDrawer="showDrawer = false" @toggleTheme="toggleTheme"/>
-  <MdEditor v-show="showPreview" v-model="text" :preview="true" :theme="theme" class="markedit" editorId="editmark" @onSave="onSave"
+  <MdEditor v-show="showPreview" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editmark" @onSave="onSave"
             @onUploadImg="onUploadImg"/>
-  <MdPreview v-show="!showPreview" v-model="text" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
+  <MdPreview v-show="!showPreview" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
 </template>
 
 <script setup>
@@ -16,11 +16,12 @@ import {onMounted, ref} from 'vue';
 import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
+import {getNoteFile, saveNoteFile} from "@/api/note/notefile";
 
 const showDrawer = ref(false);
 const showPreview = ref(true);
-const text = ref('# Hello Editor');
 const theme = ref('light');
+const noteFile = ref(null);
 
 onMounted(() => {
   let localTheme = localStorage.getItem('cloud-note-theme');
@@ -35,14 +36,18 @@ function toggleTheme(res) {
 }
 
 //开打文件
-function openFile(id) {
-  text.value = id;
+function openFile(fileId) {
+  getNoteFile(fileId).then(response => {
+    noteFile.value = response;
+  })
 }
 
 /*保存数据*/
 function onSave(value, html) {
-  console.log(value)
-  console.log(html)
+  noteFile.content = value;
+  noteFile.html = html;
+  saveNoteFile(noteFile).then(response => {
+  })
 }
 
 /*图片上传*/
