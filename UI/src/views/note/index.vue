@@ -19,6 +19,7 @@ import Drawer from '../../components/Note/Drawer.vue'
 import {getNoteFile, saveNoteFile, uploadFile} from "@/api/note/notefile";
 import {ElMessage, ElNotification} from "element-plus";
 
+const baseApi = import.meta.env.VITE_APP_BASE_API;
 const showDrawer = ref(false);
 const showPreview = ref(true);
 const theme = ref('light');
@@ -74,7 +75,7 @@ function onUploadImg(files, callback) {
     formData.append('files', files[i]);
   }
   uploadFile(formData).then(response => {
-    let url = "/notefile/image/" + response;
+    let url = baseApi + "/notefile/image/" + response;
     callback([url])
   })
 }
