@@ -17,6 +17,7 @@ import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
 import {getNoteFile, saveNoteFile} from "@/api/note/notefile";
+import {ElMessage} from "element-plus";
 
 const showDrawer = ref(false);
 const showPreview = ref(true);
@@ -48,9 +49,16 @@ function onSave(value, html) {
     noteFile.value.content = value;
     noteFile.value.html = obj;
     saveNoteFile(noteFile.value).then(response => {
+      ElMessage({
+        message: '保存成功',
+        type: 'success',
+      })
     })
   }).catch(error => {
-    console.error(error);
+    ElMessage({
+      message: '保存失败率',
+      type: 'error',
+    })
   });
 }
 
