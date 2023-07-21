@@ -47,7 +47,6 @@ function searchList(params) {
   childListNote(params).then(response => {
     let data = response.rows;
     for (let row of data) {
-      row.isDeleted = 0;
       row.isEdit = false;
     }
     array.value = data;
