@@ -101,7 +101,7 @@ function deleteFile(item) {
   cursor: pointer;
 }
 
->>> .el-card__body {
+::v-deep .el-card__body {
   display: flex;
   align-items: center;
 }

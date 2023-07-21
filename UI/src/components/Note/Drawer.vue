@@ -126,7 +126,7 @@ onMounted(() => {
   padding: 20px;
 }
 
->>> .el-card__body {
+::v-deep .el-card__body {
   padding: 4px 0px 8px 6px !important;
 }
 </style>
