@@ -6,6 +6,14 @@
         <el-button icon="Upload" type="primary" @click="dialogVisible = true">导入</el-button>
         <el-button :icon="iconShow" circle type="warning" @click="toggleTheme"/>
       </el-row>
+      <el-space :size="10" wrap>
+        <el-icon class="pointer" color="rgb(103,194,58)" title="新增">
+          <FolderOpened/>
+        </el-icon>
+        <el-icon class="pointer" color="rgb(103,194,58)" title="新增文件">
+          <DocumentAdd/>
+        </el-icon>
+      </el-space>
     </template>
     <FileFolder v-if="array" :array="array" @openFile="openFile" @toChild="toChild"/>
     <el-dialog v-model="dialogVisible" title="文件导入">
