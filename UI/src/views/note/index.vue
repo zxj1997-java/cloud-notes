@@ -17,7 +17,7 @@ import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
 import {getNoteFile, saveNoteFile} from "@/api/note/notefile";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 
 const showDrawer = ref(false);
 const showPreview = ref(true);
@@ -40,6 +40,11 @@ function toggleTheme(res) {
 function openFile(fileId) {
   getNoteFile(fileId).then(response => {
     noteFile.value = response;
+    ElNotification({
+      title: response.title,
+      message: '文件打开成功',
+      type: 'success',
+    })
   })
 }
 

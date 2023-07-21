@@ -7,7 +7,6 @@ import com.ruoyi.note.file.service.MarkdownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -21,9 +20,6 @@ public class NoteFileController {
 
     @PostMapping
     public NoteFile save(@RequestBody NoteFile note) {
-        Date date = new Date();
-        note.setCreateTime(date);
-        note.setUpdateTime(date);
         if (StringUtils.isEmpty(note.getContent())) {
             note.setContent("");
         }

@@ -7,6 +7,8 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.note.domain.Note;
+import com.ruoyi.note.file.entity.NoteFile;
+import com.ruoyi.note.file.repository.NoteRepository;
 import com.ruoyi.note.service.INoteService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ import java.util.stream.Collectors;
 public class NoteController extends BaseController {
     @Autowired
     private INoteService noteService;
+    @Autowired
+    private NoteRepository repository;
 
     /**
      * 查询【请填写功能名称】列表
@@ -90,7 +94,11 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Note note) {
-        return toAjax(noteService.updateNote(note));
+        noteService.updateNote(note);
+        NoteFile noteFile = repository.findById(note.getId()).get();
+        noteFile.setTitle(note.getFilename());
+        repository.save(noteFile);
+        return toAjax(true);
     }
 
     /**
