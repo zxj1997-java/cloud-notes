@@ -74,7 +74,7 @@ function onUploadImg(files, callback) {
     formData.append('files', files[i]);
   }
   uploadFile(formData).then(response => {
-    let url = "/notefile/image/" + response;
+    let url = "http://localhost:8080/notefile/image/" + response;
     callback([url])
   })
 }
