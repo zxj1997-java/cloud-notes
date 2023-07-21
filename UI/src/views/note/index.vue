@@ -1,23 +1,19 @@
 <template>
   <div class="floating-button-wrapper-left">
-    <el-button class="floating-button-left" size="mini" @click="showDrawer = true" icon="Expand" type="info" color="#e9e9eb"></el-button>
+    <el-button class="floating-button-left" color="#e9e9eb" icon="Expand" size="mini" type="info" @click="showDrawer = true"></el-button>
   </div>
   <div class="floating-button-wrapper-right">
-    <el-button class="floating-button-right" size="mini" @click="showPreview=!showPreview" icon="View" color="#e9e9eb"></el-button>
+    <el-button class="floating-button-right" color="#e9e9eb" icon="View" size="mini" @click="showPreview=!showPreview"></el-button>
   </div>
-  <Drawer :showDrawer="showDrawer" @toggleTheme="toggleTheme" @toggleDrawer="showDrawer = false" @openFile="openFile"/>
-  <MdEditor editorId="editmark" class="markedit" v-model="text" :preview="true" v-show="showPreview" @onSave="onSave" :theme="theme"
+  <Drawer :showDrawer="showDrawer" @openFile="openFile" @toggleDrawer="showDrawer = false" @toggleTheme="toggleTheme"/>
+  <MdEditor v-show="showPreview" v-model="text" :preview="true" :theme="theme" class="markedit" editorId="editmark" @onSave="onSave"
             @onUploadImg="onUploadImg"/>
-  <MdPreview editorId="editpreview" class="markedit" v-model="text" :preview="true" v-show="!showPreview" :theme="theme"/>
+  <MdPreview v-show="!showPreview" v-model="text" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
 </template>
 
 <script setup>
-import {
-  ref
-} from 'vue';
-import {
-  MdEditor, MdPreview
-} from 'md-editor-v3';
+import {ref} from 'vue';
+import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
 
@@ -29,7 +25,7 @@ const theme = ref('light');
 
 //开打文件
 function openFile(id) {
-  console.log(id)
+  text.value = id;
 }
 
 function toggleTheme(res) {
