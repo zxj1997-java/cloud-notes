@@ -113,7 +113,10 @@ const toggleTheme = () => {
 
 
 function handleUpload(file, onProgress) {
-  uploadFile(file, onProgress).then(response => {
+  let formData = new FormData();
+  formData.append('file', file.file);
+  formData.append('parentId', currNodeId.value);
+  uploadFile(formData).then(response => {
     searchList({parentId: currNodeId.value});
     return response;
   });

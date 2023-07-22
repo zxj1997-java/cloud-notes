@@ -135,7 +135,7 @@ public class NoteController extends BaseController {
     }
 
     @PostMapping("/uploadFile")
-    public AjaxResult handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+    public AjaxResult handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("parentId") String parentId) throws IOException {
         SysUser user = SecurityUtils.getLoginUser().getUser();
 
         File tempDir = new File(System.getProperty("java.io.tmpdir"), "uploaded-folder");
@@ -144,7 +144,7 @@ public class NoteController extends BaseController {
 
         file.transferTo(new File(tempDir, file.getOriginalFilename()));
 
-        parseFolder(tempDir, user.getUserId(), null);
+        parseFolder(tempDir, user.getUserId(), parentId);
         return AjaxResult.success();
     }
 

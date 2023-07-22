@@ -51,13 +51,11 @@ export function delNote(id) {
     })
 }
 
-export function uploadFile(data, onProgress) {
-    let formData = new FormData();
-    formData.append('file', data.file);
+export function uploadFile(data) {
     return request({
         url: '/note/uploadFile',
         method: 'post',
-        data: formData
+        data: data
     })
 }
 
