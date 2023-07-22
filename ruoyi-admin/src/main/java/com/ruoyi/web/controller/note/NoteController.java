@@ -3,8 +3,10 @@ package com.ruoyi.web.controller.note;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.note.domain.Note;
 import com.ruoyi.note.file.entity.NoteFile;
@@ -37,7 +39,8 @@ public class NoteController extends BaseController {
      */
     @GetMapping("/children")
     public TableDataInfo children(Note note) {
-        //SysUser user = SecurityUtils.getLoginUser().getUser();
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+        note.setUserId(user.getUserId());
         List<Note> list = noteService.selectNoteList(note);
         return getDataTable(list);
     }
@@ -47,6 +50,8 @@ public class NoteController extends BaseController {
      */
     @GetMapping("/parents")
     public TableDataInfo parents(Note note) {
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+        note.setUserId(user.getUserId());
         String parent = noteService.findParentId(note.getId());
         note.setParentId(parent);
         note.setId(null);
@@ -60,6 +65,8 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Note note) {
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+        note.setUserId(user.getUserId());
         List<Note> list = noteService.selectNoteList(note);
         ExcelUtil<Note> util = new ExcelUtil<Note>(Note.class);
         util.exportExcel(response, list, "【请填写功能名称】数据");
@@ -80,10 +87,16 @@ public class NoteController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestBody Note note) {
         Date date = new Date();
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+        String userId = String.valueOf(user.getUserId());
+
         note.setId(UUID.randomUUID().toString());
         note.setIsDeleted(0L);
         note.setCreateTime(date);
         note.setUpdateTime(date);
+        note.setCreateBy(userId);
+        note.setUpdateBy(userId);
+        note.setUserId(user.getUserId());
         noteService.insertNote(note);
         return success(note);
     }
@@ -95,7 +108,8 @@ public class NoteController extends BaseController {
     @PutMapping
     public AjaxResult edit(@RequestBody Note note) {
         noteService.updateNote(note);
-        NoteFile noteFile = repository.findById(note.getId()).get();
+        NoteFile noteFile = repository.findById(note.getId()).orElse(new NoteFile());
+        noteFile.setId(note.getId());
         noteFile.setTitle(note.getFilename());
         repository.save(noteFile);
         return toAjax(true);
