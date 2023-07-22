@@ -15,9 +15,9 @@
         </el-icon>
       </el-space>
     </template>
-    <FileFolder v-if="array" :array="array" @openFile="openFile" @toChild="toChild"/>
+    <FileFolder :array="array" @openFile="openFile" @toChild="toChild"/>
     <el-dialog v-model="dialogVisible" title="文件导入">
-      <el-upload action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" class="upload-demo" drag multiple>
+      <el-upload :http-request="handleUpload" class="upload-demo" drag multiple>
         <el-icon class="el-icon--upload">
           <upload-filled/>
         </el-icon>
@@ -41,7 +41,7 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import FileFolder from './FileFolder.vue';
-import {addNote, childListNote, parentListNote} from "@/api/note/note";
+import {addNote, childListNote, parentListNote, uploadFile} from "@/api/note/note";
 import {saveNoteFile} from "@/api/note/notefile";
 
 const props = defineProps(['showDrawer']);
@@ -111,6 +111,12 @@ const toggleTheme = () => {
   emits('toggleTheme', theme.value);
 };
 
+
+function handleUpload(file, onProgress) {
+  uploadFile(file, onProgress).then(response => {
+    return response;
+  });
+}
 
 onMounted(() => {
   let localTheme = localStorage.getItem('cloud-note-theme');

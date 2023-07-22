@@ -138,6 +138,12 @@
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>3.13.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.15</version>
+        </dependency>
     </dependencies>
 
 </project>

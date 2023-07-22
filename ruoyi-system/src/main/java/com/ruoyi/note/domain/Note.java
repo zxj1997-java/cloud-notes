@@ -5,6 +5,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.Date;
+
 /**
  * 【请填写功能名称】对象 note
  *
@@ -13,53 +15,62 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class Note extends BaseEntity {
     private static final long serialVersionUID = 1L;
-
     /**
      *
      */
     private String id;
-
     /**
      *
      */
     @Excel(name = "")
     private String filename;
-
     /**
      *
      */
     @Excel(name = "")
     private Long isDirectory;
-
     /**
      *
      */
     @Excel(name = "")
     private String parentId;
-
     /**
      *
      */
     @Excel(name = "")
     private Long isTop;
-
     /**
      *
      */
     @Excel(name = "")
     private Long isFavorite;
-
     /**
      *
      */
     @Excel(name = "")
     private Long isDeleted;
-
     /**
      * $column.columnComment
      */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Long userId;
+
+    public Note(String id, String filename, Long isDirectory, String parentId, Long userId) {
+        this.id = id;
+        this.filename = filename;
+        this.isDirectory = isDirectory;
+        this.parentId = parentId;
+        this.isDeleted = 0L;
+        this.userId = userId;
+        setCreateBy(String.valueOf(userId));
+        Date date = new Date();
+        setCreateTime(date);
+        setCreateTime(date);
+        setUpdateBy(String.valueOf(userId));
+    }
+
+    public Note() {
+    }
 
     public String getId() {
         return id;

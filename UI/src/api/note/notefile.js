@@ -41,6 +41,3 @@ export function downloadFile(id) {
     })
 }
 
-
-
-
