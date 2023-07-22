@@ -1,7 +1,7 @@
 <p align="center">
 	<img alt="logo" src="https://oscimg.oschina.net/oscnet/up-d3d0a9303e11d522a06cd263f3079027715.png">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">云笔记 v3.8.6</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">云笔记 </h1><h6>(基于若依v3.8.6)</h6>
 <h4 align="center">基于SpringBoot+Vue前后端分离的Java云笔记</h4>
 <p align="center">
 	<a href="https://gitee.com/y_project/RuoYi-Vue/stargazers"><img src="https://gitee.com/y_project/RuoYi-Vue/badge/star.svg?theme=dark"></a>
