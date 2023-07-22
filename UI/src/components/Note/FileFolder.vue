@@ -36,6 +36,8 @@
                       </el-icon>
                     </template>
                   </el-popconfirm>
+                  <el-icon class="pointer moveto" color="rgb(230,162,94)" title="移动到其他分组">
+                  </el-icon>
                 </el-space>
               </div>
             </div>
@@ -104,5 +106,11 @@ function deleteFile(item) {
 :deep(.el-card__body) {
   display: flex;
   align-items: center;
+}
+
+.moveto {
+  width: 1em;
+  height: 1em;
+  content: url('@/assets/icons/note/move.svg');
 }
 </style>
