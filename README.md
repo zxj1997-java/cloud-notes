@@ -44,6 +44,50 @@
 17. 在线构建器：拖动表单元素生成相应的HTML代码。
 18. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
 
+## 使用方法
+
+1. vue编译打包
+2. 配置mysql, 配置redis,配置mongodb
+3. 后台代码打包
+4. 将编译好的前端代码放入到nginx中的html文件夹下
+5. 配置nginx的nginx.conf文件
+   ```
+     http {
+      include       mime.types;
+      default_type  application/octet-stream;
+
+      sendfile        on;
+      #tcp_nopush     on;
+      keepalive_timeout  65;
+
+      upstream nginx-cluster{
+          server 192.168.150.101:8081;
+      }
+     server {
+          listen       80;
+          server_name  localhost;
+
+          location / {
+              root   html;
+              index  index.html;
+              try_files $uri $uri/ /index.html;#这边一定要加上否则会出现404
+          }
+        
+          location /prod-api/{
+              proxy_pass http://localhost:8080/;#后台服务地址
+          }
+
+          error_page   500 502 503 504  /50x.html;
+          location = /50x.html {
+              root   html;
+          }
+      }
+   }   
+   ```
+
+6.启动nginx即可
+
 ## 演示图
 
 ![img.png](imgs/img.png)
+

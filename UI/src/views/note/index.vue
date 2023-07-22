@@ -3,12 +3,14 @@
     <el-button class="floating-button-left" color="#e9e9eb" icon="Expand" size="mini" type="info" @click="showDrawer = true"></el-button>
   </div>
   <div class="floating-button-wrapper-right">
-    <el-button class="floating-button-right" color="#e9e9eb" icon="View" size="mini" @click="showPreview=!showPreview"></el-button>
+    <el-button v-show="showPreview==1 || showPreview==2" class="floating-button-right" color="#e9e9eb" icon="View" size="mini" @click="showPreview=showPreview==2?1:2"></el-button>
   </div>
   <Drawer :showDrawer="showDrawer" @openFile="openFile" @toggleDrawer="showDrawer = false" @toggleTheme="toggleTheme"/>
-  <MdEditor v-show="showPreview" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editmark" @onSave="onSave"
-            @onUploadImg="onUploadImg"/>
-  <MdPreview v-show="!showPreview" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
+  <MdEditor v-if="showPreview==1" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editmark" @onSave="onSave" @onUploadImg="onUploadImg"/>
+  <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
+  <div v-else-if="showPreview==3" style="text-align: center">
+    <h1>海内存知己,天涯若比邻</h1>
+  </div>
 </template>
 
 <script setup>
@@ -21,7 +23,7 @@ import {ElMessage, ElNotification} from "element-plus";
 
 const baseApi = import.meta.env.VITE_APP_BASE_API;
 const showDrawer = ref(false);
-const showPreview = ref(true);
+const showPreview = ref(3);
 const theme = ref('light');
 const noteFile = ref({});
 
@@ -41,6 +43,7 @@ function toggleTheme(res) {
 function openFile(fileId) {
   getNoteFile(fileId).then(response => {
     noteFile.value = response;
+    showPreview.value = 1;
     ElNotification({
       title: response.title,
       message: '文件打开成功',
