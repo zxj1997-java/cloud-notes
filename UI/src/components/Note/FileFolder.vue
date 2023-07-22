@@ -42,9 +42,9 @@
                       title="选择文件夹"
                       trigger="click">
                     <template #reference>
-                      <el-icon class="pointer moveto" color="rgb(230,162,94)" title="移动到其他分组"></el-icon>
+                      <el-icon class="pointer moveto" color="rgb(230,162,94)" title="移动到其他分组" @click="getCurrentFile(item)"></el-icon>
                     </template>
-                    <el-tree :check-on-click-node="true" :data="data" :expand-on-click-node="false" @node-click="nodeClick"/>
+                    <el-tree :check-on-click-node="true" :expand-on-click-node="false" :lazy="true" :load="loadNode" @node-click="nodeClick"/>
                   </el-popover>
 
                 </el-space>
@@ -69,7 +69,7 @@
   </el-scrollbar>
 </template>
 <script setup>
-import {delNote, updateNote} from "@/api/note/note";
+import {childListNote, delNote, updateNote} from "@/api/note/note";
 import {ElMessage} from "element-plus";
 import {ref} from "vue";
 
@@ -77,6 +77,7 @@ const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
 const dialogVisible = ref(false);
 const node = ref({});
+const currentFile = ref({});
 
 function toChild(id, isDirectory) {
   if (isDirectory) {
@@ -112,73 +113,41 @@ function deleteFile(item) {
 
 function nodeClick(e) {
   dialogVisible.value = true
+  node.value = e;
   node.value.title = e.label;
+}
+
+
+function getCurrentFile(note) {
+  currentFile.value = note;
 }
 
 function moveTo() {
   dialogVisible.value = false
-
+  let oldParentId = currentFile.value.parentId;
   //调用ajax移动节点
+  currentFile.value.parentId = node.value.id;
+  updateNote(currentFile.value).then(response => {
+    ElMessage({
+      message: '移动成功',
+      type: 'success',
+    })
+    emits('toChild', oldParentId);
+  })
 }
 
-const data = ref([
-  {
-    id: "1",
-    label: 'Level one 1',
-    children: [
-      {
-        label: 'Level two 1-1',
-        children: [
-          {
-            label: 'Level three 1-1-1',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Level one 2',
-    children: [
-      {
-        label: 'Level two 2-1',
-        children: [
-          {
-            label: 'Level three 2-1-1',
-          },
-        ],
-      },
-      {
-        label: 'Level two 2-2',
-        children: [
-          {
-            label: 'Level three 2-2-1',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Level one 3',
-    children: [
-      {
-        label: 'Level two 3-1',
-        children: [
-          {
-            label: 'Level three 3-1-1',
-          },
-        ],
-      },
-      {
-        label: 'Level two 3-2',
-        children: [
-          {
-            label: 'Level three 3-2-1',
-          },
-        ],
-      },
-    ],
-  },
-])
+function loadNode(node, resolve) {
+  let note = {
+    parentId: node.data.id,
+    isDirectory: 1
+  }
+  childListNote(note).then(response => {
+    for (let row of response.rows) {
+      row.label = row.filename;
+    }
+    resolve(response.rows)
+  })
+}
 
 </script>
 <style scoped>
