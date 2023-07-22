@@ -36,8 +36,17 @@
                       </el-icon>
                     </template>
                   </el-popconfirm>
-                  <el-icon class="pointer moveto" color="rgb(230,162,94)" title="移动到其他分组">
-                  </el-icon>
+
+                  <el-popover
+                      :width="200" placement="right"
+                      title="选择文件夹"
+                      trigger="click">
+                    <template #reference>
+                      <el-icon class="pointer moveto" color="rgb(230,162,94)" title="移动到其他分组"></el-icon>
+                    </template>
+                    <el-tree :check-on-click-node="true" :data="data" :expand-on-click-node="false" @node-click="nodeClick"/>
+                  </el-popover>
+
                 </el-space>
               </div>
             </div>
@@ -45,14 +54,29 @@
         </el-col>
       </el-row>
     </template>
+    <el-dialog
+        v-model="dialogVisible"
+        title="提示"
+        width="20%">
+      <span>确认选择<span v-text="node.title"></span>节点吗</span>
+      <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="moveTo"> 确认选择</el-button>
+      </span>
+      </template>
+    </el-dialog>
   </el-scrollbar>
 </template>
 <script setup>
 import {delNote, updateNote} from "@/api/note/note";
 import {ElMessage} from "element-plus";
+import {ref} from "vue";
 
 const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
+const dialogVisible = ref(false);
+const node = ref({});
 
 function toChild(id, isDirectory) {
   if (isDirectory) {
@@ -85,6 +109,77 @@ function deleteFile(item) {
     item.isDeleted = 1;
   });
 }
+
+function nodeClick(e) {
+  dialogVisible.value = true
+  node.value.title = e.label;
+}
+
+function moveTo() {
+  dialogVisible.value = false
+
+  //调用ajax移动节点
+}
+
+const data = ref([
+  {
+    id: "1",
+    label: 'Level one 1',
+    children: [
+      {
+        label: 'Level two 1-1',
+        children: [
+          {
+            label: 'Level three 1-1-1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Level one 2',
+    children: [
+      {
+        label: 'Level two 2-1',
+        children: [
+          {
+            label: 'Level three 2-1-1',
+          },
+        ],
+      },
+      {
+        label: 'Level two 2-2',
+        children: [
+          {
+            label: 'Level three 2-2-1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Level one 3',
+    children: [
+      {
+        label: 'Level two 3-1',
+        children: [
+          {
+            label: 'Level three 3-1-1',
+          },
+        ],
+      },
+      {
+        label: 'Level two 3-2',
+        children: [
+          {
+            label: 'Level three 3-2-1',
+          },
+        ],
+      },
+    ],
+  },
+])
+
 </script>
 <style scoped>
 .titleInput {
