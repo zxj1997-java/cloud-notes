@@ -42,11 +42,11 @@
                       title="选择文件夹"
                       trigger="click">
                     <template #reference>
-                      <el-icon class="pointer moveto" color="rgb(230,162,94)" title="移动到其他分组" @click="getCurrentFile(item)"></el-icon>
+                      <el-icon class="pointer moveto" title="移动到其他分组" @click="getCurrentFile(item)"></el-icon>
                     </template>
                     <el-tree :check-on-click-node="true" :expand-on-click-node="false" :lazy="true" :load="loadNode" @node-click="nodeClick"/>
                   </el-popover>
-                  <el-icon :style="{color:item.isShare==1?'#3a4138':'#0b9f0b'}" class="pointer" title="分享">
+                  <el-icon :color="item.isShare==1?'#3a4138':'#0b9f0b'" class="pointer" title="分享">
                     <Share/>
                   </el-icon>
                 </el-space>
