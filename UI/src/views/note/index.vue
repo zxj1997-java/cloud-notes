@@ -6,9 +6,13 @@
     <el-button v-show="showPreview==1 || showPreview==2" class="floating-button-right" color="#e9e9eb" icon="View" size="mini" @click="showPreview=showPreview==2?1:2"></el-button>
   </div>
   <Drawer :showDrawer="showDrawer" @openFile="openFile" @toggleDrawer="showDrawer = false" @toggleTheme="toggleTheme"/>
-  <MdEditor v-if="showPreview==1" v-model="noteFile.content" :autoDetectCode="true" :preview="true" :theme="theme" :toolbarsExclude="toolbarsExclude" class="markedit"
+  <MdEditor v-if="showPreview==1" v-model="noteFile.content" :autoDetectCode="true" :preview="true" :theme="theme"
+            :toolbars="toolbars" :toolbarsExclude="toolbarsExclude" class="markedit"
             editorId="editmark" @onBlur="onBlur"
             @onSave="onSave" @onUploadImg="onUploadImg">
+    <template #defToolbars>
+      <span style="margin-right:20px;"><b v-text="noteFile.title"></b></span>
+    </template>
   </MdEditor>
   <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
   <div v-else-if="showPreview==3" style="text-align: center">
@@ -30,7 +34,7 @@ const showPreview = ref(3);
 const theme = ref('light');
 const noteFile = ref({});
 const toolbarsExclude = ref(['pageFullscreen', 'github', 'htmlPreview']);
-
+const toolbars = ref([0, 'bold', 'underline', 'italic', '-', 'title', 'strikeThrough', 'sub', 'sup', 'quote', 'unorderedList', 'orderedList', 'task', '-', 'codeRow', 'code', 'link', 'image', 'table', 'mermaid', 'katex', '-', 'revoke', 'next', 'save', '=', 'pageFullscreen', 'fullscreen', 'preview', 'htmlPreview', 'catalog', 'github'])
 onMounted(() => {
   let localTheme = localStorage.getItem('cloud-note-theme');
   if (localTheme) {
