@@ -11,7 +11,7 @@
             editorId="editmark" @onBlur="onBlur"
             @onSave="onSave" @onUploadImg="onUploadImg">
     <template #defToolbars>
-      <span style="margin-right:20px;"><b v-text="noteFile.title"></b></span>
+      <span style="margin-right:20px;font-size: 13px" v-text="noteFile.title"></span>
     </template>
   </MdEditor>
   <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
