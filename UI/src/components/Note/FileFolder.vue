@@ -58,7 +58,7 @@
         v-model="dialogVisible"
         title="提示"
         width="20%">
-      <span>确认选择<span v-text="node.title"></span>节点吗</span>
+      <span>确认选择 <span style="color:#00b391;" v-text="node.label"> </span>节点吗</span>
       <template #footer>
       <span class="dialog-footer">
         <el-button @click="cancelMove">取消</el-button>
@@ -138,7 +138,6 @@ function moveTo() {
   let oldParentId = currentFile.parentId;
   //调用ajax移动节点
   currentFile.parentId = node.value.id;
-  console.log(currentFile)
   updateNote(currentFile).then(response => {
     ElMessage({
       message: '移动成功',
