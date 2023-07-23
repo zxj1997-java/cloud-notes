@@ -104,10 +104,13 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Note note) {
+        Date now = new Date();
+        note.setUpdateTime(now);
         noteService.updateNote(note);
         NoteFile noteFile = repository.findById(note.getId()).orElse(new NoteFile());
         noteFile.setId(note.getId());
         noteFile.setTitle(note.getFilename());
+        noteFile.setUpdateTime(now);
         repository.save(noteFile);
         return toAjax(true);
     }

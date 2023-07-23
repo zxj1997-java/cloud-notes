@@ -75,6 +75,7 @@ function onSave(value, html) {
   html.then(obj => {
     noteFile.value.content = value;
     noteFile.value.html = obj;
+    noteFile.value.updateTime = new Date();
     saveNoteFile(noteFile.value).then(response => {
       ElMessage({
         message: '保存成功',

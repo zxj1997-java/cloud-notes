@@ -110,6 +110,7 @@
             <if test="isFavorite != null">is_favorite = #{isFavorite},</if>
             <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
             <if test="userId != null">user_id = #{userId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
         </trim>
         where id = #{id}
     </update>
