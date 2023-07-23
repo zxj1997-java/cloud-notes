@@ -119,7 +119,7 @@ function handleLogin() {
       }
       // 调用action的登录方法
       userStore.login(loginForm.value).then(() => {
-        router.push({path: redirect.value || "/"});
+        router.push({path: redirect.value || "/note"});
       }).catch(() => {
         loading.value = false;
         // 重新获取验证码
