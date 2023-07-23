@@ -27,7 +27,7 @@ const showDrawer = ref(false);
 const showPreview = ref(3);
 const theme = ref('light');
 const noteFile = ref({});
-const toolbars = ref(['bold', 'underline', 'italic', '-', 'strikeThrough', 'title', 'sub', 'sup', 'quote', 'unorderedList', 'orderedList', 'task', '-', 'codeRow', 'code', 'link', 'image', 'table', 'mermaid', 'katex', '-', 'revoke', 'next', 'save', '=', 'fullscreen', 'preview', 'htmlPreview', 'catalog']);
+const toolbars = ref(['bold', 'underline', 'italic', '-', 'strikeThrough', 'title', 'sub', 'sup', 'quote', 'unorderedList', 'orderedList', 'task', '-', 'codeRow', 'code', 'link', 'image', 'table', 'mermaid', 'katex', '-', 'revoke', 'next', 'save', '=', 'fullscreen', 'preview', 'catalog']);
 
 onMounted(() => {
   let localTheme = localStorage.getItem('cloud-note-theme');
