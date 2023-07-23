@@ -99,6 +99,7 @@
             <if test="filename != null and filename != ''">filename = #{filename},</if>
             <if test="isDirectory != null">is_directory = #{isDirectory},</if>
             <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="parentId == null">parent_id = null,</if>
             <if test="isTop != null">is_top = #{isTop},</if>
             <if test="isFavorite != null">is_favorite = #{isFavorite},</if>
             <if test="isDeleted != null">is_deleted = #{isDeleted},</if>

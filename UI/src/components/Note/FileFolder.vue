@@ -61,7 +61,7 @@
       <span>确认选择<span v-text="node.title"></span>节点吗</span>
       <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="cancelMove">取消</el-button>
         <el-button type="primary" @click="moveTo"> 确认选择</el-button>
       </span>
       </template>
@@ -76,8 +76,8 @@ import {ref} from "vue";
 const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
 const dialogVisible = ref(false);
-const node = ref({});
-const currentFile = ref({});
+const node = ref(null);
+let currentFile = null;
 
 function toChild(id, isDirectory) {
   if (isDirectory) {
@@ -112,22 +112,34 @@ function deleteFile(item) {
 }
 
 function nodeClick(e) {
-  dialogVisible.value = true
-  node.value = e;
-  node.value.title = e.label;
+  if (currentFile.id == e.id) {
+    ElMessage({
+      message: '不能选择自己',
+      type: 'error',
+    })
+  } else {
+    node.value = e;
+    dialogVisible.value = true
+  }
 }
 
 
 function getCurrentFile(note) {
-  currentFile.value = note;
+  currentFile = note;
+}
+
+function cancelMove() {
+  dialogVisible.value = false
+  node.value = null;
 }
 
 function moveTo() {
   dialogVisible.value = false
-  let oldParentId = currentFile.value.parentId;
+  let oldParentId = currentFile.parentId;
   //调用ajax移动节点
-  currentFile.value.parentId = node.value.id;
-  updateNote(currentFile.value).then(response => {
+  currentFile.parentId = node.value.id;
+  console.log(currentFile)
+  updateNote(currentFile).then(response => {
     ElMessage({
       message: '移动成功',
       type: 'success',
@@ -137,16 +149,29 @@ function moveTo() {
 }
 
 function loadNode(node, resolve) {
-  let note = {
-    parentId: node.data.id,
-    isDirectory: 1
-  }
-  childListNote(note).then(response => {
-    for (let row of response.rows) {
-      row.label = row.filename;
+  if (node.data.length == 0) {
+    let root = {
+      id: null,
+      label: "我的文件夹"
     }
-    resolve(response.rows)
-  })
+    resolve([root]);
+  } else {
+    let note = {
+      parentId: node.data.id,
+      isDirectory: 1
+    }
+
+    childListNote(note).then(response => {
+      let newRows = [];
+      for (let row of response.rows) {
+        if (currentFile.id != row.id) {
+          row.label = row.filename;
+          newRows.push(row)
+        }
+      }
+      resolve(newRows)
+    })
+  }
 }
 
 </script>
