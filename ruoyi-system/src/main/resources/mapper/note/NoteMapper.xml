@@ -10,6 +10,7 @@
         <result property="isDirectory" column="is_directory"/>
         <result property="parentId" column="parent_id"/>
         <result property="isTop" column="is_top"/>
+        <result property="isShare" column="is_share"/>
         <result property="isFavorite" column="is_favorite"/>
         <result property="isDeleted" column="is_deleted"/>
         <result property="userId" column="user_id"/>
@@ -26,6 +27,7 @@
                is_directory,
                parent_id,
                is_top,
+               is_share,
                is_favorite,
                is_deleted,
                user_id,
@@ -47,6 +49,7 @@
             and ifnull(is_deleted,0)!=1
             <if test="isTop != null ">and is_top = #{isTop}</if>
             <if test="isFavorite != null ">and is_favorite = #{isFavorite}</if>
+            <if test="isShare != null ">and is_share = #{isShare}</if>
             <if test="isDeleted != null ">and is_deleted = #{isDeleted}</if>
             <if test="userId != null ">and user_id = #{userId}</if>
             order by is_directory desc
@@ -76,6 +79,7 @@
             <if test="filename != null and filename != ''">filename,</if>
             <if test="isDirectory != null">is_directory,</if>
             <if test="parentId != null">parent_id,</if>
+            <if test="isShare != null">is_share,</if>
             <if test="isTop != null">is_top,</if>
             <if test="isFavorite != null">is_favorite,</if>
             <if test="isDeleted != null">is_deleted,</if>
@@ -86,6 +90,7 @@
             <if test="filename != null and filename != ''">#{filename},</if>
             <if test="isDirectory != null">#{isDirectory},</if>
             <if test="parentId != null">#{parentId},</if>
+            <if test="isShare != null">#{isShare},</if>
             <if test="isTop != null">#{isTop},</if>
             <if test="isFavorite != null">#{isFavorite},</if>
             <if test="isDeleted != null">#{isDeleted},</if>
@@ -100,6 +105,7 @@
             <if test="isDirectory != null">is_directory = #{isDirectory},</if>
             <if test="parentId != null">parent_id = #{parentId},</if>
             <if test="parentId == null">parent_id = null,</if>
+            <if test="isShare != null">is_share = #{isShare},</if>
             <if test="isTop != null">is_top = #{isTop},</if>
             <if test="isFavorite != null">is_favorite = #{isFavorite},</if>
             <if test="isDeleted != null">is_deleted = #{isDeleted},</if>

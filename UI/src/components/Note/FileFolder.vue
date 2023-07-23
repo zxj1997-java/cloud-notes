@@ -46,7 +46,9 @@
                     </template>
                     <el-tree :check-on-click-node="true" :expand-on-click-node="false" :lazy="true" :load="loadNode" @node-click="nodeClick"/>
                   </el-popover>
-
+                  <el-icon title="分享">
+                    <Share/>
+                  </el-icon>
                 </el-space>
               </div>
             </div>

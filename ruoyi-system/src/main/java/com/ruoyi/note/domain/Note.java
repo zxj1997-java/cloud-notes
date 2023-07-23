@@ -38,6 +38,11 @@ public class Note extends BaseEntity {
      *
      */
     @Excel(name = "")
+    private Long isShare;
+    /**
+     *
+     */
+    @Excel(name = "")
     private Long isTop;
     /**
      *
@@ -136,6 +141,14 @@ public class Note extends BaseEntity {
         this.userId = userId;
     }
 
+    public Long getIsShare() {
+        return isShare;
+    }
+
+    public void setIsShare(Long isShare) {
+        this.isShare = isShare;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -147,6 +160,7 @@ public class Note extends BaseEntity {
                 .append("isFavorite", getIsFavorite())
                 .append("isDeleted", getIsDeleted())
                 .append("userId", getUserId())
+                .append("isShare", getIsShare())
                 .toString();
     }
 }
