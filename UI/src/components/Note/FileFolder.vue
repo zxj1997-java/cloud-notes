@@ -130,7 +130,6 @@ function getCurrentFile(note) {
 
 function cancelMove() {
   dialogVisible.value = false
-  node.value = null;
 }
 
 function moveTo() {
