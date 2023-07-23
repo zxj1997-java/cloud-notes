@@ -15,9 +15,7 @@
     </template>
   </MdEditor>
   <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
-  <div v-else-if="showPreview==3" style="text-align: center">
-    <h1>海内存知己,天涯若比邻</h1>
-  </div>
+  <Welcome v-else-if="showPreview==3"/>
 </template>
 
 <script setup>
@@ -25,6 +23,7 @@ import {onMounted, ref} from 'vue';
 import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
+import Welcome from '../../components/Note/Welcome.vue'
 import {getNoteFile, saveNoteFile, uploadFile} from "@/api/note/notefile";
 import {ElMessage, ElNotification} from "element-plus";
 
@@ -56,6 +55,7 @@ function openFile(fileId) {
       title: response.title,
       message: '文件打开成功',
       type: 'success',
+      duration: 1000
     })
   })
 }

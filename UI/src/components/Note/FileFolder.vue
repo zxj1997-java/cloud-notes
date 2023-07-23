@@ -18,8 +18,8 @@
                   </el-icon>
                 </template>
               </el-input>
-              <div @click="toChild(item.id,item.isDirectory)">
-                <el-text v-show="!item.isEdit" class="mx-1" size="small" style="font-size: 13px" truncated v-text="item.filename"></el-text>&nbsp;
+              <div v-if="!item.isEdit" @click="toChild(item.id,item.isDirectory)">
+                <el-text class="mx-1" size="small" style="font-size: 13px" truncated v-text="item.filename"></el-text>&nbsp;
               </div>
             </div>
             <div class="inlineblock" style="width: 36%">
