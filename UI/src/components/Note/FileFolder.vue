@@ -74,6 +74,7 @@
 import {childListNote, delNote, updateNote} from "@/api/note/note";
 import {ElMessage} from "element-plus";
 import {ref} from "vue";
+import dayjs from "dayjs";
 
 const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
@@ -90,7 +91,10 @@ function toChild(id, isDirectory) {
 }
 
 function updateFileName(item) {
-  item.isEdit = !item.isEdit
+  let now = dayjs();
+  let formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
+  item.updateTime = formattedDate;
+  item.isEdit = !item.isEdit;
   updateNote(item).then(response => {
     ElMessage({
       message: '修改成功',
