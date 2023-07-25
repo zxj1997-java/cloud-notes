@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * MongoDB 笔记对象
  */
-@Document(collection = "notes")
+@Document(collection = "note_file")
 public class NoteFile implements Serializable {
     private static final long serialVersionUID = 1L;
 

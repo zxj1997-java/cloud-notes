@@ -87,4 +87,10 @@ public class NoteFileController {
             IOUtils.copy(inputStream, response.getOutputStream());
         }
     }
+
+
+    @GetMapping("/getAllByFullTextSearch")
+    public List<NoteFile> getAllByFullTextSearch(String text) {
+        return noteFileService.fullTextSearch(text);
+    }
 }

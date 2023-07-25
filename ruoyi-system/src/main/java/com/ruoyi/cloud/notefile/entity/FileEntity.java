@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Document(collection = "files")
+@Document(collection = "file_entity")
 public class FileEntity {
     @Id
     private String id;
