@@ -1,4 +1,4 @@
-package com.ruoyi.note.file.entity;
+package com.ruoyi.cloud.notefile.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,7 +1,7 @@
-package com.ruoyi.note.file.service;
+package com.ruoyi.cloud.notefile.service;
 
-import com.ruoyi.note.file.entity.FileEntity;
-import com.ruoyi.note.file.repository.FileRepository;
+import com.ruoyi.cloud.notefile.entity.FileEntity;
+import com.ruoyi.cloud.notefile.repository.FileRepository;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

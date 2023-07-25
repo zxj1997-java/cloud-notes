@@ -65,7 +65,7 @@
         from note
         where id = #{id}
     </select>
-    <select id="findChildren" resultType="com.ruoyi.note.domain.Note">
+    <select id="findChildren" resultType="com.ruoyi.cloud.note.domain.Note">
         select * from note where ifnull(is_deleted,'')='' and parent_id in
         <foreach item="id" collection="list" open="(" separator="," close=")">
             #{id}

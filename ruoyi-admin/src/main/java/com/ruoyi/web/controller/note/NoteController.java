@@ -1,6 +1,11 @@
 package com.ruoyi.web.controller.note;
 
 import cn.hutool.core.io.FileUtil;
+import com.ruoyi.cloud.note.domain.Note;
+import com.ruoyi.cloud.note.service.INoteService;
+import com.ruoyi.cloud.notefile.entity.NoteFile;
+import com.ruoyi.cloud.notefile.repository.NoteRepository;
+import com.ruoyi.cloud.notefile.service.MarkdownService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -9,11 +14,6 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.note.domain.Note;
-import com.ruoyi.note.file.entity.NoteFile;
-import com.ruoyi.note.file.repository.NoteRepository;
-import com.ruoyi.note.file.service.MarkdownService;
-import com.ruoyi.note.service.INoteService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;

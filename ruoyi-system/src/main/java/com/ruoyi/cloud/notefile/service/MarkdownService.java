@@ -1,7 +1,7 @@
-package com.ruoyi.note.file.service;
+package com.ruoyi.cloud.notefile.service;
 
-import com.ruoyi.note.file.entity.NoteFile;
-import com.ruoyi.note.file.repository.NoteRepository;
+import com.ruoyi.cloud.notefile.entity.NoteFile;
+import com.ruoyi.cloud.notefile.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Service
 public class MarkdownService {
-    
+
     @Autowired
     private NoteRepository repository;
 

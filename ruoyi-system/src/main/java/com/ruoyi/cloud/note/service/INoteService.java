@@ -1,6 +1,6 @@
-package com.ruoyi.note.service;
+package com.ruoyi.cloud.note.service;
 
-import com.ruoyi.note.domain.Note;
+import com.ruoyi.cloud.note.domain.Note;
 
 import java.util.List;
 

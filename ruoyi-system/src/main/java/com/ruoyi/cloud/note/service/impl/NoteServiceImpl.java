@@ -1,8 +1,8 @@
-package com.ruoyi.note.service.impl;
+package com.ruoyi.cloud.note.service.impl;
 
-import com.ruoyi.note.domain.Note;
-import com.ruoyi.note.mapper.NoteMapper;
-import com.ruoyi.note.service.INoteService;
+import com.ruoyi.cloud.note.domain.Note;
+import com.ruoyi.cloud.note.mapper.NoteMapper;
+import com.ruoyi.cloud.note.service.INoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

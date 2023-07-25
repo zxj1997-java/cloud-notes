@@ -1,7 +1,7 @@
-package com.ruoyi.note.mapper;
+package com.ruoyi.cloud.note.mapper;
 
 
-import com.ruoyi.note.domain.Note;
+import com.ruoyi.cloud.note.domain.Note;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

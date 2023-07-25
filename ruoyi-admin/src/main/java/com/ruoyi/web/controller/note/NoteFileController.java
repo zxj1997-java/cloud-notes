@@ -1,13 +1,13 @@
 package com.ruoyi.web.controller.note;
 
+import com.ruoyi.cloud.note.domain.Note;
+import com.ruoyi.cloud.note.service.INoteService;
+import com.ruoyi.cloud.notefile.entity.FileEntity;
+import com.ruoyi.cloud.notefile.entity.NoteFile;
+import com.ruoyi.cloud.notefile.repository.NoteRepository;
+import com.ruoyi.cloud.notefile.service.MarkdownService;
+import com.ruoyi.cloud.notefile.service.MongoDbUploaderService;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.note.domain.Note;
-import com.ruoyi.note.file.entity.FileEntity;
-import com.ruoyi.note.file.entity.NoteFile;
-import com.ruoyi.note.file.repository.NoteRepository;
-import com.ruoyi.note.file.service.MarkdownService;
-import com.ruoyi.note.file.service.MongoDbUploaderService;
-import com.ruoyi.note.service.INoteService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
