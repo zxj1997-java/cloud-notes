@@ -16,7 +16,7 @@
   </MdEditor>
   <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
   <Welcome v-else-if="showPreview==3"/>
-
+  <FullSearch :show="fullSearchDialog" @closeDialog="fullSearchDialog=false"/>
 </template>
 
 <script setup>
@@ -25,12 +25,14 @@ import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
 import Welcome from '../../components/Note/Welcome.vue'
+import FullSearch from "../../components/Note/FullSearch.vue";
 import {getNoteFile, saveNoteFile, uploadFile} from "@/api/note/notefile";
 import {ElMessage, ElNotification} from "element-plus";
 
 const baseApi = import.meta.env.VITE_APP_BASE_API;
 const showDrawer = ref(false);
 const showPreview = ref(3);
+const fullSearchDialog = ref(false);
 const theme = ref('light');
 const noteFile = ref({});
 const toolbarsExclude = ref(['pageFullscreen', 'github', 'htmlPreview']);
@@ -116,8 +118,7 @@ function handleKeyDown(event) {
     event.preventDefault();
   }
   if (event.ctrlKey && event.key === 'h') {
-
-    alert("111")
+    fullSearchDialog.value=true;
   }
 }
 </script>

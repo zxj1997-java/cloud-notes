@@ -12,6 +12,11 @@
       </thead>
       <tbody>
       <tr>
+        <td>CTRL+H</td>
+        <td>全局搜索</td>
+        <td>在标题和内容中进行模糊搜索</td>
+      </tr>
+      <tr>
         <td>TAB</td>
         <td>空格</td>
         <td>通过tabWidth属性预设 TAB 键位新增空格长度，默认 2，支持多行</td>
