@@ -1,6 +1,15 @@
 <template>
-  <MdPreview :editorId="id" :modelValue="text"/>
-  <MdCatalog :editorId="id" :scrollElement="scrollElement"/>
+  <el-row>
+    <el-col :span="3" style="background-color: #7dae00">
+      <MdCatalog :editorId="id" :scrollElement="scrollElement"/>
+    </el-col>
+    <el-col :span="18">
+      <MdPreview :editorId="id" :modelValue="text"/>
+    </el-col>
+    <el-col :span="3" style="background-color: #01961a">
+      <div>云笔记:程序员专属的笔记</div>
+    </el-col>
+  </el-row>
 </template>
 
 <script setup>
@@ -13,3 +22,7 @@ const id = 'preview-only';
 const text = ref('# Hello Editor');
 const scrollElement = document.documentElement;
 </script>
+
+<style scoped>
+
+</style>
