@@ -1,12 +1,12 @@
 <template>
   <el-row>
-    <el-col :span="3" style="background-color: #7dae00">
+    <el-col :span="3" class="col" style="background-color: #7dae00">
       <MdCatalog :editorId="id" :scrollElement="scrollElement"/>
     </el-col>
-    <el-col :span="18">
+    <el-col :span="18" class="col">
       <MdPreview :editorId="id" :modelValue="text"/>
     </el-col>
-    <el-col :span="3" style="background-color: #01961a">
+    <el-col :span="3" class="col" style="background-color: #01961a">
       <div>云笔记:程序员专属的笔记</div>
     </el-col>
   </el-row>
@@ -24,5 +24,7 @@ const scrollElement = document.documentElement;
 </script>
 
 <style scoped>
-
+.col {
+  height: 100vh;
+}
 </style>
