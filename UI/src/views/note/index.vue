@@ -16,10 +16,11 @@
   </MdEditor>
   <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
   <Welcome v-else-if="showPreview==3"/>
+
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
+import {onBeforeUnmount, onMounted, ref} from 'vue';
 import {MdEditor, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import Drawer from '../../components/Note/Drawer.vue'
@@ -102,6 +103,20 @@ function onUploadImg(files, callback) {
   })
 }
 
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeyDown);
+});
+
+function handleKeyDown(event) {
+  event.preventDefault(); // 阻止默认的浏览器行为
+  if (event.ctrlKey && event.key === 'h') {
+    alert("111")
+  }
+}
 </script>
 <style scoped>
 #editmark {
