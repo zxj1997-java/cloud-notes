@@ -5,6 +5,7 @@ import com.ruoyi.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.ruoyi.framework.security.handle.AuthenticationEntryPointImpl;
 import com.ruoyi.framework.security.handle.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,6 +64,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PermitAllUrlProperties permitAllUrl;
 
+
+    @Value("${noAuthorizationUri}")
+    private String noAuthorizationUri;
+
     /**
      * 解决 无法直接注入 AuthenticationManager
      *
@@ -92,6 +97,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        String[] uriArray = noAuthorizationUri.split(";");
+
         // 注解标记允许匿名访问的url
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
         permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
@@ -108,8 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/register", "/captchaImage").permitAll()
-                .antMatchers("/notefile/image/**").permitAll()//, "/note/uploadFile"
+                .antMatchers(uriArray).permitAll()
                 // 静态资源，可匿名访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
