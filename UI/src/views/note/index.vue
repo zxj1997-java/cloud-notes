@@ -112,8 +112,11 @@ onBeforeUnmount(() => {
 });
 
 function handleKeyDown(event) {
-  event.preventDefault(); // 阻止默认的浏览器行为
+  if (!event.ctrlKey || event.key !== 'f') {
+    event.preventDefault();
+  }
   if (event.ctrlKey && event.key === 'h') {
+
     alert("111")
   }
 }
