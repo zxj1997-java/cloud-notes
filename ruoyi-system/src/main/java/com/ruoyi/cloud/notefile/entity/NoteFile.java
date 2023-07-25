@@ -15,7 +15,9 @@ public class NoteFile implements Serializable {
 
     @Id
     private String id;
+
     private String title;
+
     private String content;
     private String html;
     private Date createTime;

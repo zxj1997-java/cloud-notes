@@ -89,8 +89,13 @@ public class NoteFileController {
     }
 
 
-    @GetMapping("/getAllByFullTextSearch")
-    public List<NoteFile> getAllByFullTextSearch(String text) {
-        return noteFileService.fullTextSearch(text);
+    @GetMapping("/search")
+    public List<NoteFile> search(String keyword) {
+        return noteFileService.search(keyword);
+    }
+
+    @GetMapping("/searchByTitle")
+    public List<NoteFile> searchByTitle(String keyword) {
+        return noteFileService.searchByTitle(keyword);
     }
 }

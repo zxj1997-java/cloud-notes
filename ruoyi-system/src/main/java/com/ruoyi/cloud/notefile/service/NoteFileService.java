@@ -25,9 +25,22 @@ public class NoteFileService {
         return repository.save(note);
     }
 
+
+    public List<NoteFile> searchByTitle(String keyword) {
+        return repository.findByTitleContainingIgnoreCase(keyword);
+    }
+
+    public List<NoteFile> searchByContent(String keyword) {
+        return repository.findByContentContainingIgnoreCase(keyword);
+    }
+
+    public List<NoteFile> search(String keyword) {
+        return repository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword);
+    }
+
+
     public List<NoteFile> fullTextSearch(String text) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matchingAny(text);
-        List<NoteFile> results = repository.findAllBy(criteria);
-        return results;
+        return repository.findAllBy(criteria);
     }
 }
