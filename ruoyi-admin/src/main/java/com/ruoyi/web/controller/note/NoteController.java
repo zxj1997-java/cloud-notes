@@ -4,8 +4,8 @@ import cn.hutool.core.io.FileUtil;
 import com.ruoyi.cloud.note.domain.Note;
 import com.ruoyi.cloud.note.service.INoteService;
 import com.ruoyi.cloud.notefile.entity.NoteFile;
-import com.ruoyi.cloud.notefile.repository.NoteRepository;
-import com.ruoyi.cloud.notefile.service.MarkdownService;
+import com.ruoyi.cloud.notefile.repository.NoteFileRepository;
+import com.ruoyi.cloud.notefile.service.NoteFileService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -39,9 +39,9 @@ public class NoteController extends BaseController {
     @Autowired
     private INoteService noteService;
     @Autowired
-    private NoteRepository repository;
+    private NoteFileRepository repository;
     @Autowired
-    private MarkdownService markdownService;
+    private NoteFileService noteFileService;
 
     /**
      * 查询【请填写功能名称】列表
@@ -167,7 +167,7 @@ public class NoteController extends BaseController {
                 noteFile.setId(note.getId());
                 noteFile.setTitle(note.getFilename());
                 noteFile.setContent(FileUtil.readString(file, Charset.defaultCharset()));
-                markdownService.save(noteFile);
+                noteFileService.save(noteFile);
             }
         }
     }

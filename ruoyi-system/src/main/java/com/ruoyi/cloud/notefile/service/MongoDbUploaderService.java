@@ -1,7 +1,7 @@
 package com.ruoyi.cloud.notefile.service;
 
 import com.ruoyi.cloud.notefile.entity.FileEntity;
-import com.ruoyi.cloud.notefile.repository.FileRepository;
+import com.ruoyi.cloud.notefile.repository.MongoDbFileRepository;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Component
 public class MongoDbUploaderService {
     @Autowired
-    private FileRepository fileRepository;
+    private MongoDbFileRepository fileRepository;
 
     public FileEntity upload(InputStream inputStream, String fileName, String contentType) throws IOException {
         byte[] content = IOUtils.toByteArray(inputStream);

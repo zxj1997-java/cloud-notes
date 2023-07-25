@@ -1,17 +1,17 @@
 package com.ruoyi.cloud.notefile.service;
 
 import com.ruoyi.cloud.notefile.entity.NoteFile;
-import com.ruoyi.cloud.notefile.repository.NoteRepository;
+import com.ruoyi.cloud.notefile.repository.NoteFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
-public class MarkdownService {
+public class NoteFileService {
 
     @Autowired
-    private NoteRepository repository;
+    private NoteFileRepository repository;
 
     public NoteFile save(NoteFile note) {
         Date date = new Date();

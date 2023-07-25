@@ -4,9 +4,9 @@ import com.ruoyi.cloud.note.domain.Note;
 import com.ruoyi.cloud.note.service.INoteService;
 import com.ruoyi.cloud.notefile.entity.FileEntity;
 import com.ruoyi.cloud.notefile.entity.NoteFile;
-import com.ruoyi.cloud.notefile.repository.NoteRepository;
-import com.ruoyi.cloud.notefile.service.MarkdownService;
+import com.ruoyi.cloud.notefile.repository.NoteFileRepository;
 import com.ruoyi.cloud.notefile.service.MongoDbUploaderService;
+import com.ruoyi.cloud.notefile.service.NoteFileService;
 import com.ruoyi.common.utils.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,9 @@ import java.util.List;
 @RequestMapping("/notefile")
 public class NoteFileController {
     @Autowired
-    private NoteRepository repository;
+    private NoteFileRepository repository;
     @Autowired
-    private MarkdownService markdownService;
+    private NoteFileService noteFileService;
 
     @Autowired
     private MongoDbUploaderService uploaderService;
@@ -44,7 +44,7 @@ public class NoteFileController {
         if (StringUtils.isEmpty(note.getContent())) {
             note.setContent("");
         }
-        return markdownService.save(note);
+        return noteFileService.save(note);
     }
 
     @GetMapping
