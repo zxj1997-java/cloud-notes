@@ -44,8 +44,9 @@ export function downloadFile(id) {
 
 export function fullSearch(keyword) {
     return request({
-        url: '/notefile/search?keyword='+keyword,
-        method: 'get',
+        url: '/notefile/search',
+        method: 'post',
+        data:keyword
     })
 }
 

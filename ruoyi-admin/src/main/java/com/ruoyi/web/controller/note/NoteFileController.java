@@ -89,9 +89,15 @@ public class NoteFileController {
     }
 
 
-    @GetMapping("/search")
-    public List<NoteFile> search(String keyword) {
-        return noteFileService.search(keyword);
+    @PostMapping("/search")
+    public List<NoteFile> search(@RequestBody String keyword) {
+        List<NoteFile> list = noteFileService.search(keyword);
+        for (NoteFile noteFile : list) {
+            String content = noteFile.getContent();
+            String replaceStr="<span style=\"color:#ff0000\">"+keyword+"</span>";
+            noteFile.setContent(content.replaceAll(keyword,replaceStr));
+        }
+        return list;
     }
 
     @GetMapping("/searchByTitle")
