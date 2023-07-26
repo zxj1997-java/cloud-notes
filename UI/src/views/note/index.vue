@@ -16,7 +16,7 @@
   </MdEditor>
   <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
   <Welcome v-else-if="showPreview==3"/>
-  <FullSearch :show="fullSearchDialog" @closeDialog="fullSearchDialog=false"/>
+  <FullSearch :show="fullSearchDialog" :theme="theme" @closeDialog="fullSearchDialog=false"/>
 </template>
 
 <script setup>
@@ -114,11 +114,9 @@ onBeforeUnmount(() => {
 });
 
 function handleKeyDown(event) {
-  if (!event.ctrlKey || event.key !== 'f') {
-    event.preventDefault();
-  }
   if (event.ctrlKey && event.key === 'h') {
     fullSearchDialog.value=true;
+    event.preventDefault();
   }
 }
 </script>

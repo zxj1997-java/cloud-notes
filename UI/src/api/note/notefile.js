@@ -41,3 +41,13 @@ export function downloadFile(id) {
     })
 }
 
+
+export function fullSearch(keyword) {
+    return request({
+        url: '/notefile/search?keyword='+keyword,
+        method: 'get',
+    })
+}
+
+
+

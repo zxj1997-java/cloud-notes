@@ -136,7 +136,7 @@ xss:
   urlPatterns: /system/*,/monitor/*,/tool/*
 
 # 免登录即可访问的路径
-noAuthorizationUri: /notefile/image/**;/notefile/getAllByFullTextSearch;
+noAuthorizationUri: /notefile/image/**;
 
 # 对象存储配置
 oss:
