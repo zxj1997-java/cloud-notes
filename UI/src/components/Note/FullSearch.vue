@@ -13,6 +13,7 @@
         <li v-for="(item,index) in note" :key="index" class="infinite-list-item" @click="content=item.content">{{ item.title }}</li>
       </ul>
     </div>
+    <el-divider />
     <div id="prew" style="max-height: 500px;overflow: auto;margin-top: 20px">
       <MdPreview v-if="content!=null" v-model="content" :theme="props.theme"/>
     </div>

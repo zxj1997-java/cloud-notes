@@ -46,7 +46,7 @@
                     </template>
                     <el-tree :check-on-click-node="true" :expand-on-click-node="false" :lazy="true" :load="loadNode" @node-click="nodeClick"/>
                   </el-popover>
-                  <el-icon :color="item.isShare==1?'#3a4138':'#0b9f0b'" class="pointer" title="分享">
+                  <el-icon :color="item.isShare==1?'#3a4138':'#0b9f0b'" class="pointer" title="分享"  @click="shareNote(item)">
                     <Share/>
                   </el-icon>
                 </el-space>
@@ -68,6 +68,30 @@
       </span>
       </template>
     </el-dialog>
+
+    <el-dialog v-model="dialogShareVisible" title="笔记分享" width="30%" top="50vh">
+      <div>
+        <el-link type="primary">https://element-plus.org/zh-CN/component/link.html</el-link>
+      </div>
+      <div>
+        <el-radio-group v-model="radio1" class="ml-4">
+          <el-radio label="1" size="large">1小时</el-radio>
+          <el-radio label="2" size="large">4小时</el-radio>
+          <el-radio label="2" size="large">1天</el-radio>
+          <el-radio label="2" size="large">30天</el-radio>
+        </el-radio-group>
+      </div>
+
+
+      <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogShareVisible = false">取消</el-button>
+        <el-button type="primary" @click="dialogShareVisible = false">
+          分享
+        </el-button>
+      </span>
+      </template>
+    </el-dialog>
   </el-scrollbar>
 </template>
 <script setup>
@@ -79,6 +103,7 @@ import dayjs from "dayjs";
 const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
 const dialogVisible = ref(false);
+const dialogShareVisible = ref(false);
 const node = ref(null);
 let currentFile = null;
 
@@ -176,6 +201,11 @@ function loadNode(node, resolve) {
       resolve(newRows)
     })
   }
+}
+
+function shareNote(item){
+  dialogShareVisible.value=true;
+  console.log(item)
 }
 
 </script>
