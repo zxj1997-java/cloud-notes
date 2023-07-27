@@ -22,7 +22,24 @@ public class NoteFile implements Serializable {
     private String html;
     private Date createTime;
     private Date updateTime;
+    private Long userId;
+    private Integer isDeleted;
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 
     public String getId() {
         return id;

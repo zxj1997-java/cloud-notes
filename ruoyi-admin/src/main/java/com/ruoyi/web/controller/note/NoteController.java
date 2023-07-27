@@ -168,6 +168,7 @@ public class NoteController extends BaseController {
                 NoteFile noteFile = new NoteFile();
                 noteFile.setId(note.getId());
                 noteFile.setTitle(note.getFilename());
+                noteFile.setUserId(userId);
                 noteFile.setContent(FileUtil.readString(file, Charset.defaultCharset()));
                 noteFileService.save(noteFile);
             }
