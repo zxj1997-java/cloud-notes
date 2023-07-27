@@ -38,6 +38,16 @@
     </el-dialog>
   </el-drawer>
 </template>
+<script>
+import {nextTick} from "vue";
+export default {
+  mounted() {
+    nextTick(()=>{
+      document.getElementsByClassName("el-upload__input").webkitdirectory=true;
+    })
+  }
+}
+</script>
 <script setup>
 import {onMounted, ref} from 'vue';
 import FileFolder from './FileFolder.vue';
