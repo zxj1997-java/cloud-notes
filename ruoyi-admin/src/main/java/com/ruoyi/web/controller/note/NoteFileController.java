@@ -96,7 +96,9 @@ public class NoteFileController {
 
     @PostMapping("/search")
     public List<NoteFile> search(@RequestBody String keyword) {
-        List<NoteFile> list = noteFileService.search(keyword);
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+
+        List<NoteFile> list = noteFileService.search(keyword,user.getUserId());
         for (NoteFile noteFile : list) {
             String content = noteFile.getContent();
             String replaceStr="<span style=\"color:#ff0000\">"+keyword+"</span>";

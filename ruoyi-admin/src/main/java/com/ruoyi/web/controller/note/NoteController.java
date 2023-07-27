@@ -106,6 +106,7 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Note note) {
+        SysUser user = SecurityUtils.getLoginUser().getUser();
         Date now = new Date();
         note.setUpdateTime(now);
         noteService.updateNote(note);
@@ -113,6 +114,8 @@ public class NoteController extends BaseController {
         noteFile.setId(note.getId());
         noteFile.setTitle(note.getFilename());
         noteFile.setUpdateTime(now);
+        noteFile.setIsDeleted(0);
+        noteFile.setUserId(user.getUserId());
         repository.save(noteFile);
         return toAjax(true);
     }

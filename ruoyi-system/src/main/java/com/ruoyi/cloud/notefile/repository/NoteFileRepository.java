@@ -15,6 +15,6 @@ public interface NoteFileRepository extends MongoRepository<NoteFile, String> {
 
     List<NoteFile> findByContentContainingIgnoreCase(String keyword);
 
-    List<NoteFile> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndIsDeleted(String title, String content,Integer isDeleted);
+    List<NoteFile> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndIsDeletedAndUserId(String title, String content,Integer isDeleted,Long userId);
 
 }
