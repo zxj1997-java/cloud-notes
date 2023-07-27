@@ -1,12 +1,12 @@
 <template>
-  <el-dialog v-model="props.show" style="height: 82%" title="全局搜索" @close="closeDialog">
+  <el-dialog v-model="props.show" style="height: 82%" title="全局搜索" @close="closeDialog" @opened="opened">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header" style="display: flex;flex-flow: row">
         <span>全局搜索</span>
       </div>
     </template>
     <div>
-      <el-input v-model="keyword" placeholder="请输入内容" type="text" @change="search"/>
+      <el-input ref="inputEle" v-model="keyword" placeholder="请输入内容" type="text" @change="search"/>
     </div>
     <div style="height: 180px;margin-top: 20px;overflow: auto;">
       <ul class="infinite-list">
@@ -31,6 +31,12 @@ const emits = defineEmits(['closeDialog']);
 const keyword = ref('');
 const note = ref([]);
 const content = ref(null);
+const inputEle = ref();
+
+
+function opened(){
+  inputEle.value.focus();
+}
 
 function search() {
   note.value = [];
