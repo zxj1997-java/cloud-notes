@@ -1,5 +1,6 @@
 package com.ruoyi.cloud.note.domain;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -76,7 +77,9 @@ public class Note extends BaseEntity {
         this.id = id;
         this.filename = filename;
         this.isDirectory = isDirectory;
-        this.parentId = parentId;
+        if(StrUtil.isNotBlank(parentId)){
+            this.parentId = parentId;
+        }
         this.isDeleted = 0L;
         this.userId = userId;
         setCreateBy(String.valueOf(userId));
