@@ -19,6 +19,8 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
+        <result property="shareTime" column="share_time"/>
+        <result property="shareHours" column="share_hours"/>
     </resultMap>
 
     <sql id="selectNoteVo">
@@ -35,7 +37,9 @@
                create_time,
                update_time,
                update_by,
-               remark
+               remark,
+               share_time,
+               share_hours
         from note
     </sql>
 
@@ -52,6 +56,8 @@
             <if test="isShare != null ">and is_share = #{isShare}</if>
             <if test="isDeleted != null ">and is_deleted = #{isDeleted}</if>
             <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="shareTime != null ">and share_time = #{shareTime}</if>
+            <if test="shareHours != null ">and share_hours = #{shareHours}</if>
             order by is_directory desc
         </where>
     </select>
@@ -84,6 +90,8 @@
             <if test="isFavorite != null">is_favorite,</if>
             <if test="isDeleted != null">is_deleted,</if>
             <if test="userId != null">user_id,</if>
+            <if test="shareTime != null">share_time,</if>
+            <if test="shareHours != null">share_hours,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">#{id},</if>
@@ -95,6 +103,8 @@
             <if test="isFavorite != null">#{isFavorite},</if>
             <if test="isDeleted != null">#{isDeleted},</if>
             <if test="userId != null">#{userId},</if>
+            <if test="shareTime != null">#{shareTime},</if>
+            <if test="shareHours != null">#{shareHours},</if>
         </trim>
     </insert>
 
@@ -111,6 +121,8 @@
             <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
             <if test="userId != null">user_id = #{userId},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="shareTime != null">share_time = #{shareTime},</if>
+            <if test="shareHours != null">share_hours = #{shareHours},</if>
         </trim>
         where id = #{id}
     </update>

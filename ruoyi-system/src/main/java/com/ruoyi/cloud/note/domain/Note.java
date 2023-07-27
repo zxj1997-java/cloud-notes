@@ -1,9 +1,8 @@
 package com.ruoyi.cloud.note.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
 
@@ -60,6 +59,19 @@ public class Note extends BaseEntity {
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Long userId;
 
+
+    /**
+     * 分享时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date shareTime;
+
+
+    /**
+     * 分享时间
+     */
+    private Long shareHours;
+
     public Note(String id, String filename, Long isDirectory, String parentId, Long userId) {
         this.id = id;
         this.filename = filename;
@@ -72,6 +84,22 @@ public class Note extends BaseEntity {
         setCreateTime(date);
         setCreateTime(date);
         setUpdateBy(String.valueOf(userId));
+    }
+
+    public Date getShareTime() {
+        return shareTime;
+    }
+
+    public void setShareTime(Date shareTime) {
+        this.shareTime = shareTime;
+    }
+
+    public Long getShareHours() {
+        return shareHours;
+    }
+
+    public void setShareHours(Long shareHours) {
+        this.shareHours = shareHours;
     }
 
     public Note() {
@@ -151,16 +179,18 @@ public class Note extends BaseEntity {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("id", getId())
-                .append("filename", getFilename())
-                .append("isDirectory", getIsDirectory())
-                .append("parentId", getParentId())
-                .append("isTop", getIsTop())
-                .append("isFavorite", getIsFavorite())
-                .append("isDeleted", getIsDeleted())
-                .append("userId", getUserId())
-                .append("isShare", getIsShare())
-                .toString();
+        return "Note{" +
+                "id='" + id + '\'' +
+                ", filename='" + filename + '\'' +
+                ", isDirectory=" + isDirectory +
+                ", parentId='" + parentId + '\'' +
+                ", isShare=" + isShare +
+                ", isTop=" + isTop +
+                ", isFavorite=" + isFavorite +
+                ", isDeleted=" + isDeleted +
+                ", userId=" + userId +
+                ", shareTime=" + shareTime +
+                ", shareHours=" + shareHours +
+                '}';
     }
 }

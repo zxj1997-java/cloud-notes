@@ -171,6 +171,17 @@ public class NoteController extends BaseController {
             }
         }
     }
+    /**
+     * 分享
+     */
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
+    @PostMapping("/shareNote")
+    public void shareNote(@RequestBody Note note) {
+        note.setIsShare(1L);
+        note.setShareTime(new Date());
+        noteService.updateNote(note);
+    }
+
 
 
     /**

@@ -46,7 +46,7 @@
                     </template>
                     <el-tree :check-on-click-node="true" :expand-on-click-node="false" :lazy="true" :load="loadNode" @node-click="nodeClick"/>
                   </el-popover>
-                  <el-icon :color="item.isShare==1?'#3a4138':'#0b9f0b'" class="pointer" title="分享"  @click="shareNote(item)">
+                  <el-icon :color="item.isShare==1?'#3a4138':'#0b9f0b'" class="pointer" title="分享" @click="shareNote(item)">
                     <Share/>
                   </el-icon>
                 </el-space>
@@ -71,14 +71,14 @@
 
     <el-dialog v-model="dialogShareVisible" title="笔记分享" width="30%" top="50vh">
       <div>
-        <el-link type="primary">https://element-plus.org/zh-CN/component/link.html</el-link>
+        <el-link type="primary" v-text="shareLink"></el-link>
       </div>
       <div>
-        <el-radio-group v-model="radio1" class="ml-4">
-          <el-radio label="1" size="large">1小时</el-radio>
-          <el-radio label="2" size="large">4小时</el-radio>
-          <el-radio label="2" size="large">1天</el-radio>
-          <el-radio label="2" size="large">30天</el-radio>
+        <el-radio-group v-model="time" class="ml-4">
+          <el-radio size="large" :label="1">1小时</el-radio>
+          <el-radio size="large" :label="4">4小时</el-radio>
+          <el-radio size="large" :label="24">1天</el-radio>
+          <el-radio size="large" :label="24*30">30天</el-radio>
         </el-radio-group>
       </div>
 
@@ -86,7 +86,7 @@
       <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogShareVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogShareVisible = false">
+        <el-button type="primary" @click="copyAndShare">
           分享
         </el-button>
       </span>
@@ -95,7 +95,7 @@
   </el-scrollbar>
 </template>
 <script setup>
-import {childListNote, delNote, updateNote} from "@/api/note/note";
+import {childListNote, delNote, updateNote, shareNoteApi} from "@/api/note/note";
 import {ElMessage} from "element-plus";
 import {ref} from "vue";
 import dayjs from "dayjs";
@@ -105,6 +105,8 @@ const emits = defineEmits(['toChild', 'openFile']);
 const dialogVisible = ref(false);
 const dialogShareVisible = ref(false);
 const node = ref(null);
+const time = ref(4);
+const shareLink = ref("https://element-plus.org/zh-CN/component/link.html");
 let currentFile = null;
 
 function toChild(id, isDirectory) {
@@ -203,11 +205,23 @@ function loadNode(node, resolve) {
   }
 }
 
-function shareNote(item){
-  dialogShareVisible.value=true;
-  console.log(item)
+function shareNote(item) {
+  currentFile = item;
+  shareLink.value = "http://localhost/share?id=" + currentFile.id
+  dialogShareVisible.value = true;
 }
 
+async function copyAndShare() {
+  currentFile.shareHours=time.value;
+  await navigator.clipboard.writeText(shareLink.value);
+  dialogShareVisible.value = false
+  shareNoteApi(currentFile).then((res)=>{
+    ElMessage({
+      message: '已复制到系统剪切板',
+      type: 'success',
+    })
+  })
+}
 </script>
 <style scoped>
 .titleInput {

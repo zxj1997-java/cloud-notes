@@ -59,3 +59,13 @@ export function uploadFile(data) {
     })
 }
 
+
+export function shareNoteApi(data) {
+    return request({
+        url: '/note/shareNote',
+        method: 'post',
+        data: data
+    })
+}
+
+
