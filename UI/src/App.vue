@@ -22,4 +22,8 @@ onMounted(() => {
 .el-popper {
   z-index: 100000 !important;
 }
+
+.custom-tip{
+  z-index: 100000 !important;
+}
 </style>

@@ -126,6 +126,7 @@ function updateFileName(item) {
     ElMessage({
       message: '修改成功',
       type: 'success',
+      customClass:"custom-tip"
     })
   });
 }
@@ -139,6 +140,7 @@ function deleteFile(item) {
     ElMessage({
       message: '删除成功',
       type: 'success',
+      customClass:"custom-tip"
     })
     item.isDeleted = 1;
   });
@@ -149,6 +151,7 @@ function nodeClick(e) {
     ElMessage({
       message: '不能选择自己',
       type: 'error',
+      customClass:"custom-tip"
     })
   } else {
     node.value = e;
@@ -174,6 +177,7 @@ function moveTo() {
     ElMessage({
       message: '移动成功',
       type: 'success',
+      customClass:"custom-tip"
     })
     emits('toChild', oldParentId);
   })
@@ -226,6 +230,7 @@ async function copyAndShare() {
     ElMessage({
       message: '已复制到系统剪切板',
       type: 'success',
+      customClass:"custom-tip"
     })
   })
 }

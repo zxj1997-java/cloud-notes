@@ -58,7 +58,8 @@ function openFile(fileId) {
       title: response.title,
       message: '文件打开成功',
       type: 'success',
-      duration: 1000
+      duration: 1000,
+      customClass:"custom-tip"
     })
   })
 }
@@ -69,7 +70,8 @@ function onBlur(event) {
     ElMessage({
       message: '保存成功',
       type: 'success',
-      grouping:true
+      grouping:true,
+      customClass:"custom-tip"
     })
   })
 }
@@ -84,13 +86,15 @@ function onSave(value, html) {
       ElMessage({
         message: '保存成功',
         type: 'success',
-        grouping:true
+        grouping:true,
+        customClass:"custom-tip"
       })
     })
   }).catch(error => {
     ElMessage({
       message: '保存失败率',
       type: 'error',
+      customClass:"custom-tip"
     })
   });
 }
