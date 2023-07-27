@@ -46,7 +46,7 @@
                     </template>
                     <el-tree :check-on-click-node="true" :expand-on-click-node="false" :lazy="true" :load="loadNode" @node-click="nodeClick"/>
                   </el-popover>
-                  <el-icon :color="item.isShare==1?'#3a4138':'#0b9f0b'" class="pointer" title="分享" @click="shareNote(item)">
+                  <el-icon :color="'#0b9f0b'" class="pointer" title="分享" @click="shareNote(item)">
                     <Share/>
                   </el-icon>
                 </el-space>
@@ -207,7 +207,14 @@ function loadNode(node, resolve) {
 
 function shareNote(item) {
   currentFile = item;
-  shareLink.value = "http://localhost/share?id=" + currentFile.id
+  const currentPath = window.location.href;
+  const projectPath = currentPath.replace(/\/\w+\.html(\?.*)?$/, '');
+
+  const url = new URL(projectPath);
+  const port = url.port;
+  const host = url.host;
+  const protocol = url.protocol;
+  shareLink.value = protocol+host+port+"/share?id=" + currentFile.id
   dialogShareVisible.value = true;
 }
 
