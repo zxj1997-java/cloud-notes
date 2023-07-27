@@ -125,8 +125,11 @@ public class NoteController extends BaseController {
     public AjaxResult remove(@PathVariable String[] ids) {
         List<String> list = new ArrayList<>(Arrays.asList(ids));
         findChildren(list);
-
-        repository.deleteAllById(list);
+        Iterable<NoteFile> noteFiles = repository.findAllById(list);
+        for (NoteFile noteFile : noteFiles) {
+            noteFile.setIsDeleted(1);
+        }
+        repository.saveAll(noteFiles);
         return toAjax(noteService.deleteNoteByIds(list));
     }
 

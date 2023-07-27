@@ -35,7 +35,7 @@ public class NoteFileService {
     }
 
     public List<NoteFile> search(String keyword) {
-        return repository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword);
+        return repository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseAndIsDeleted(keyword, keyword,0);
     }
 
 
