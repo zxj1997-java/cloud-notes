@@ -68,4 +68,13 @@ export function shareNoteApi(data) {
     })
 }
 
+// 查询【请填写功能名称】详细
+export function getShareNote(id) {
+    return request({
+        url: '/note/getShareNote/' + id,
+        method: 'get'
+    })
+}
+
+
 

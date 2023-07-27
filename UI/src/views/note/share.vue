@@ -3,7 +3,7 @@
     <el-col :span="3" class="col" style="background-color: #476a8c">
       <MdCatalog :editorId="id" :scrollElement="scrollElement" />
     </el-col>
-    <el-col :span="18" class="col">
+    <el-col :span="18" class="col" style="overflow: auto">
       <MdPreview :editorId="id" :modelValue="text" />
     </el-col>
     <el-col :span="3" class="col" style="background-color: #476a8c">
@@ -27,17 +27,17 @@
 import {onMounted, ref} from 'vue';
 import {MdCatalog, MdPreview} from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
-import {getNoteFile} from "@/api/note/notefile";
+import {getShareNote} from "@/api/note/note";
 
 const id = 'preview-only';
-const text = ref('# Hello Editor');
+const text = ref('');
 const scrollElement = document.documentElement;
 
 onMounted(() => {
   // 解析查询字符串，并获取 id 参数的值
   const params = new URLSearchParams(window.location.search);
-  getNoteFile(params.get('id')).then(response => {
-    text.value = response.content;
+  getShareNote(params.get('id')).then(response => {
+    text.value = response;
   })
 })
 </script>

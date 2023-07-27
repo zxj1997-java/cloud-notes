@@ -1,5 +1,7 @@
 package com.ruoyi.web.controller.note;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import com.ruoyi.cloud.note.domain.Note;
 import com.ruoyi.cloud.note.service.INoteService;
@@ -171,6 +173,7 @@ public class NoteController extends BaseController {
             }
         }
     }
+
     /**
      * 分享
      */
@@ -182,7 +185,31 @@ public class NoteController extends BaseController {
         noteService.updateNote(note);
     }
 
-
+    /**
+     * 分享
+     */
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
+    @GetMapping("/getShareNote/{id}")
+    public String getShareNote(@PathVariable("id") String id) {
+        Note note = noteService.selectNoteById(id);
+        Long isShare = note.getIsShare();
+        Long shareHours = note.getShareHours();
+        Date shareTime = note.getShareTime();
+        if (isShare == 1) {
+            DateTime dateTime = DateUtil.offsetHour(shareTime, Math.toIntExact(shareHours));
+            int compare = DateUtil.compare(new Date(), dateTime);
+            if (compare > 0) {
+                note.setIsShare(0L);
+                noteService.updateNote(note);
+                return "##\n 笔记分享已过期,请联系作者!";
+            } else {
+                NoteFile noteFile = repository.findById(id).get();
+                return noteFile.getContent();
+            }
+        } else {
+            return "##\n 笔记不存在,请联系作者!";
+        }
+    }
 
     /**
      * 导出【请填写功能名称】列表
