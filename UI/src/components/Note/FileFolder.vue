@@ -29,7 +29,7 @@
                   <el-icon class="pointer" color="rgb(230,162,94)" title="重命名" @click="item.isEdit=!item.isEdit">
                     <Edit/>
                   </el-icon>
-                  <el-popconfirm :visible="item.popconfirm" title="确认要删除吗?" trigger="click" @confirm="confirmEvent(item)">
+                  <el-popconfirm :visible="item.popconfirm" title="确认要删除吗?" @cancel="item.popconfirm=false" trigger="click" @confirm="confirmEvent(item)">
                     <template #reference>
                       <el-icon class="pointer" color="#f56c6c" title="删除" @click="item.popconfirm=true">
                         <DeleteFilled/>
@@ -132,7 +132,8 @@ function updateFileName(item) {
 }
 
 function confirmEvent(e) {
-  deleteFile(e)
+  deleteFile(e);
+  e.popconfirm=false;
 }
 
 function deleteFile(item) {
