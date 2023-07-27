@@ -7,6 +7,8 @@ import com.ruoyi.cloud.notefile.entity.NoteFile;
 import com.ruoyi.cloud.notefile.repository.NoteFileRepository;
 import com.ruoyi.cloud.notefile.service.MongoDbUploaderService;
 import com.ruoyi.cloud.notefile.service.NoteFileService;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,10 @@ public class NoteFileController {
         noteFile.setUpdateTime(new Date());
         noteService.updateNote(noteFile);
         if (StringUtils.isEmpty(note.getContent())) {
+            SysUser user = SecurityUtils.getLoginUser().getUser();
             note.setContent("");
+            note.setUserId(user.getUserId());
+            note.setIsDeleted(0);
         }
         return noteFileService.save(note);
     }

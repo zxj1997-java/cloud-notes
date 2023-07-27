@@ -125,6 +125,8 @@ public class NoteController extends BaseController {
     public AjaxResult remove(@PathVariable String[] ids) {
         List<String> list = new ArrayList<>(Arrays.asList(ids));
         findChildren(list);
+
+        repository.deleteAllById(list);
         return toAjax(noteService.deleteNoteByIds(list));
     }
 
@@ -169,6 +171,7 @@ public class NoteController extends BaseController {
                 noteFile.setId(note.getId());
                 noteFile.setTitle(note.getFilename());
                 noteFile.setUserId(userId);
+                noteFile.setIsDeleted(0);
                 noteFile.setContent(FileUtil.readString(file, Charset.defaultCharset()));
                 noteFileService.save(noteFile);
             }
