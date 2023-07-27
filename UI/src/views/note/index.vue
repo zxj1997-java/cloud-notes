@@ -69,6 +69,7 @@ function onBlur(event) {
     ElMessage({
       message: '保存成功',
       type: 'success',
+      grouping:true
     })
   })
 }
@@ -83,6 +84,7 @@ function onSave(value, html) {
       ElMessage({
         message: '保存成功',
         type: 'success',
+        grouping:true
       })
     })
   }).catch(error => {
