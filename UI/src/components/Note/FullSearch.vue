@@ -14,7 +14,7 @@
       </ul>
     </div>
     <el-divider />
-    <div id="prew" style="max-height: 500px;overflow: auto;margin-top: 20px">
+    <div id="prew" style="max-height: calc(100vh - 530px);overflow: auto;margin-top: 20px">
       <MdPreview v-if="content!=null" v-model="content" :theme="props.theme"/>
     </div>
   </el-dialog>
