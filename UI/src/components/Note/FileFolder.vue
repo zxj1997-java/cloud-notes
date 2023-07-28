@@ -63,7 +63,7 @@
       <span>确认选择 <span style="color:#00b391;" v-text="node.label"> </span>节点吗</span>
       <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancelMove">取消</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary" @click="moveTo"> 确认选择</el-button>
       </span>
       </template>
@@ -118,22 +118,20 @@ function toChild(id, isDirectory) {
 }
 
 function updateFileName(item) {
-  let now = dayjs();
-  let formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
-  item.updateTime = formattedDate;
+  item.updateTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
   item.isEdit = !item.isEdit;
   updateNote(item).then(response => {
     ElMessage({
       message: '修改成功',
       type: 'success',
-      customClass:"custom-tip"
+      customClass: "custom-tip"
     })
   });
 }
 
 function confirmEvent(e) {
   deleteFile(e);
-  e.popconfirm=false;
+  e.popconfirm = false;
 }
 
 function deleteFile(item) {
@@ -141,7 +139,7 @@ function deleteFile(item) {
     ElMessage({
       message: '删除成功',
       type: 'success',
-      customClass:"custom-tip"
+      customClass: "custom-tip"
     })
     item.isDeleted = 1;
   });
@@ -152,7 +150,7 @@ function nodeClick(e) {
     ElMessage({
       message: '不能选择自己',
       type: 'error',
-      customClass:"custom-tip"
+      customClass: "custom-tip"
     })
   } else {
     node.value = e;
@@ -165,10 +163,6 @@ function getCurrentFile(note) {
   currentFile = note;
 }
 
-function cancelMove() {
-  dialogVisible.value = false
-}
-
 function moveTo() {
   dialogVisible.value = false
   let oldParentId = currentFile.parentId;
@@ -178,7 +172,7 @@ function moveTo() {
     ElMessage({
       message: '移动成功',
       type: 'success',
-      customClass:"custom-tip"
+      customClass: "custom-tip"
     })
     emits('toChild', oldParentId);
   })
@@ -219,19 +213,19 @@ function shareNote(item) {
   const port = url.port;
   const host = url.host;
   const protocol = url.protocol;
-  shareLink.value = protocol+host+port+"/share?id=" + currentFile.id
+  shareLink.value = protocol + host + port + "/share?id=" + currentFile.id
   dialogShareVisible.value = true;
 }
 
 async function copyAndShare() {
-  currentFile.shareHours=time.value;
+  currentFile.shareHours = time.value;
   await navigator.clipboard.writeText(shareLink.value);
   dialogShareVisible.value = false
-  shareNoteApi(currentFile).then((res)=>{
+  shareNoteApi(currentFile).then((res) => {
     ElMessage({
       message: '已复制到系统剪切板',
       type: 'success',
-      customClass:"custom-tip"
+      customClass: "custom-tip"
     })
   })
 }

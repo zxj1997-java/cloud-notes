@@ -37,12 +37,6 @@ const theme = ref('light');
 const noteFile = ref({});
 const toolbarsExclude = ref(['pageFullscreen', 'github', 'htmlPreview']);
 const toolbars = ref([0, 'bold', 'underline', 'italic', '-', 'title', 'strikeThrough', 'sub', 'sup', 'quote', 'unorderedList', 'orderedList', 'task', '-', 'codeRow', 'code', 'link', 'image', 'table', 'mermaid', 'katex', '-', 'revoke', 'next', 'save', '=', 'pageFullscreen', 'fullscreen', 'preview', 'htmlPreview', 'catalog', 'github'])
-onMounted(() => {
-  let localTheme = localStorage.getItem('cloud-note-theme');
-  if (localTheme) {
-    theme.value = localTheme;
-  }
-})
 
 function toggleTheme(res) {
   theme.value = res;
@@ -92,7 +86,7 @@ function onSave(value, html) {
     })
   }).catch(error => {
     ElMessage({
-      message: '保存失败率',
+      message: '保存失败',
       type: 'error',
       customClass:"custom-tip"
     })
@@ -112,8 +106,12 @@ function onUploadImg(files, callback) {
 }
 
 onMounted(() => {
+  let localTheme = localStorage.getItem('cloud-note-theme');
+  if (localTheme) {
+    theme.value = localTheme;
+  }
   window.addEventListener('keydown', handleKeyDown);
-});
+})
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleKeyDown);

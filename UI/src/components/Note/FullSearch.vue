@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="props.show" style="height: 82%" title="全局搜索" @close="closeDialog" @opened="opened">
+  <el-dialog v-model="props.show" style="height: 82%" title="全局搜索" @close="closeDialog" @opened="inputEle.focus()">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header" style="display: flex;flex-flow: row">
         <span>全局搜索</span>
@@ -32,11 +32,6 @@ const keyword = ref('');
 const note = ref([]);
 const content = ref(null);
 const inputEle = ref();
-
-
-function opened(){
-  inputEle.value.focus();
-}
 
 function search() {
   note.value = [];
