@@ -12,6 +12,7 @@
             @onSave="onSave" @onUploadImg="onUploadImg">
     <template #defToolbars>
       <span style="margin-right:20px;font-size: 13px" v-text="noteFile.title"></span>
+      <span v-loading="loading"></span>
     </template>
   </MdEditor>
   <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
@@ -35,8 +36,9 @@ const showPreview = ref(3);
 const fullSearchDialog = ref(false);
 const theme = ref('light');
 const noteFile = ref({});
+const loading = ref(false);
 const toolbarsExclude = ref(['pageFullscreen', 'github', 'htmlPreview']);
-const toolbars = ref([0, 'bold', 'underline', 'italic', '-', 'title', 'strikeThrough', 'sub', 'sup', 'quote', 'unorderedList', 'orderedList', 'task', '-', 'codeRow', 'code', 'link', 'image', 'table', 'mermaid', 'katex', '-', 'revoke', 'next', 'save', '=', 'pageFullscreen', 'fullscreen', 'preview', 'htmlPreview', 'catalog', 'github'])
+const toolbars = ref([0, 'bold', 'underline', 'italic', '-', 'title', 'strikeThrough', 'sub', 'sup', 'quote', 'unorderedList', 'orderedList', 'task', '-', 'codeRow', 'code', 'link', 'image', 'table', 'mermaid', 'katex', '-', 'revoke', 'next', 'save', '-', 1, '=', 'pageFullscreen', 'fullscreen', 'preview', 'htmlPreview', 'catalog', 'github'])
 
 function toggleTheme(res) {
   theme.value = res;
@@ -53,42 +55,38 @@ function openFile(fileId) {
       message: '文件打开成功',
       type: 'success',
       duration: 1000,
-      customClass:"custom-tip"
+      customClass: "custom-tip"
     })
   })
 }
 
 function onBlur(event) {
+  loading.value=true;
   noteFile.value.html = event.target.innerHTML;
   saveNoteFile(noteFile.value).then(response => {
-    ElMessage({
-      message: '保存成功',
-      type: 'success',
-      grouping:true,
-      customClass:"custom-tip"
-    })
+    setTimeout(function(){
+      loading.value=false;
+    },1000)
   })
 }
 
 /*保存数据*/
 function onSave(value, html) {
+  loading.value=true;
   html.then(obj => {
     noteFile.value.content = value;
     noteFile.value.html = obj;
     noteFile.value.updateTime = new Date();
     saveNoteFile(noteFile.value).then(response => {
-      ElMessage({
-        message: '保存成功',
-        type: 'success',
-        grouping:true,
-        customClass:"custom-tip"
-      })
+      setTimeout(function(){
+        loading.value=false;
+      },1000)
     })
   }).catch(error => {
     ElMessage({
       message: '保存失败',
       type: 'error',
-      customClass:"custom-tip"
+      customClass: "custom-tip"
     })
   });
 }
@@ -119,7 +117,7 @@ onBeforeUnmount(() => {
 
 function handleKeyDown(event) {
   if (event.ctrlKey && event.key === 'h') {
-    fullSearchDialog.value=true;
+    fullSearchDialog.value = true;
     event.preventDefault();
   }
 }
@@ -157,5 +155,9 @@ function handleKeyDown(event) {
   border-radius: 50%;
   height: 40px;
   width: 40px;
+}
+
+:deep(.circular) {
+  width: 20px !important;
 }
 </style>
