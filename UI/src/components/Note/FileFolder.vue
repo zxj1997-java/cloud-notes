@@ -3,7 +3,7 @@
     <template v-for="item in props.array">
       <el-row v-if="item.isDeleted==0">
         <el-col :span="24">
-          <el-card shadow="always">
+          <el-card :class="item.id==selected?'selected':''" shadow="always" >
             <div class="inlineblock pointer" style="width: 7%" @click="toChild(item.id,item.isDirectory)">
               <el-icon style="vertical-align: middle">
                 <Folder v-if="item.isDirectory==1"/>
@@ -106,6 +106,7 @@ const emits = defineEmits(['toChild', 'openFile']);
 const dialogVisible = ref(false);
 const dialogShareVisible = ref(false);
 const node = ref(null);
+const selected = ref(-1);
 const time = ref(4);
 const shareLink = ref("https://element-plus.org/zh-CN/component/link.html");
 let currentFile = null;
@@ -114,6 +115,7 @@ function toChild(id, isDirectory) {
   if (isDirectory) {
     emits('toChild', id)
   } else {
+    selected.value=id;
     emits('openFile', id)
   }
 }
@@ -268,5 +270,9 @@ function copyAndShare() {
   width: 1em;
   height: 1em;
   content: url('@/assets/icons/note/move.svg');
+}
+
+.selected{
+  background-color: #ffe8e8;
 }
 </style>
