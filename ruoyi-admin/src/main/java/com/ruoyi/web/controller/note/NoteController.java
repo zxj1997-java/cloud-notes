@@ -81,23 +81,17 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Note note) {
-        String userId = String.valueOf(getUserId());
         //文件重名判断
         note.setUserId(getUserId());
+        Long isDirectory = note.getIsDirectory();
+        note.setIsDirectory(null);
         List<Note> list = noteService.selectNoteList(note);
         for (Note n : list) {
             if(n.getFilename().equals(note.getFilename().trim())){
                 return error("文件名重复");
             }
         }
-        Date date = new Date();
-        note.setId(UUID.randomUUID().toString());
-        note.setIsDeleted(0L);
-        note.setCreateTime(date);
-        note.setUpdateTime(date);
-        note.setCreateBy(userId);
-        note.setUpdateBy(userId);
-        note.setUserId(getUserId());
+        note = new Note(UUID.randomUUID().toString(), note.getFilename().trim(), isDirectory, note.getParentId(), getUserId());
         noteService.insertNote(note);
         return success(note);
     }
@@ -121,11 +115,7 @@ public class NoteController extends BaseController {
         note.setUpdateTime(now);
         noteService.updateNote(note);
         NoteFile noteFile = repository.findById(note.getId()).orElse(new NoteFile());
-        noteFile.setId(note.getId());
-        noteFile.setTitle(note.getFilename());
-        noteFile.setUpdateTime(now);
-        noteFile.setIsDeleted(0);
-        noteFile.setUserId(getUserId());
+        noteFile=new NoteFile(note.getId(),note.getFilename(),noteFile.getContent(),noteFile.getHtml(),noteFile.getCreateTime(),now,getUserId(),0);
         repository.save(noteFile);
         return toAjax(true);
     }

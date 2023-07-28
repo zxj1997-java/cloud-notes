@@ -87,9 +87,9 @@ public class Note extends BaseEntity {
         this.isDeleted = 0L;
         this.userId = userId;
         setCreateBy(String.valueOf(userId));
+        setUpdateBy(String.valueOf(userId));
         Date date = new Date();
         setCreateTime(date);
-        setCreateTime(date);
-        setUpdateBy(String.valueOf(userId));
+        setUpdateTime(date);
     }
 }
