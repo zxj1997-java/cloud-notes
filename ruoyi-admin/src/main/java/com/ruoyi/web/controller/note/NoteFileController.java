@@ -38,16 +38,16 @@ public class NoteFileController extends BaseController {
     private INoteService noteService;
 
     @PostMapping
-    public NoteFile save(@RequestBody NoteFile note) {
-        Note noteFile = noteService.selectNoteById(note.getId());
-        noteFile.setUpdateTime(new Date());
-        noteService.updateNote(noteFile);
-        if (StringUtils.isEmpty(note.getContent())) {
-            note.setContent("");
-            note.setUserId(getUserId());
-            note.setIsDeleted(0);
+    public NoteFile save(@RequestBody NoteFile noteFile) {
+        Note note = noteService.selectNoteById(noteFile.getId());
+        note.setUpdateTime(new Date());
+        noteService.updateNote(note);
+        if (StringUtils.isEmpty(noteFile.getContent())) {
+            noteFile.setContent("");
+            noteFile.setUserId(getUserId());
+            noteFile.setIsDeleted(0);
         }
-        return noteFileService.save(note);
+        return noteFileService.save(noteFile);
     }
 
     @GetMapping
@@ -67,18 +67,13 @@ public class NoteFileController extends BaseController {
     }
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("files") MultipartFile[] files) {
-        try {
-            MultipartFile file = files[0];
-            String fileName = Paths.get(file.getOriginalFilename()).getFileName().toString();
-            String contentType = file.getContentType();
-            InputStream inputStream = file.getInputStream();
-            FileEntity fileEntity = uploaderService.upload(inputStream, fileName, contentType);
-            return fileEntity.getId();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public String uploadFile(@RequestParam("files") MultipartFile[] files) throws IOException {
+        MultipartFile file = files[0];
+        String fileName = Paths.get(file.getOriginalFilename()).getFileName().toString();
+        String contentType = file.getContentType();
+        InputStream inputStream = file.getInputStream();
+        FileEntity fileEntity = uploaderService.upload(inputStream, fileName, contentType);
+        return fileEntity.getId();
     }
 
     @GetMapping("/image/{id}")
@@ -94,11 +89,11 @@ public class NoteFileController extends BaseController {
 
     @PostMapping("/search")
     public List<NoteFile> search(@RequestBody String keyword) {
-        List<NoteFile> list = noteFileService.search(keyword,getUserId());
+        List<NoteFile> list = noteFileService.search(keyword, getUserId());
         for (NoteFile noteFile : list) {
             String content = noteFile.getContent();
-            String replaceStr="<span style=\"color:#ff0000\">"+keyword+"</span>";
-            noteFile.setContent(content.replaceAll(keyword,replaceStr));
+            String replaceStr = "<span style=\"color:#ff0000\">" + keyword + "</span>";
+            noteFile.setContent(content.replaceAll(keyword, replaceStr));
         }
         return list;
     }

@@ -164,13 +164,7 @@ public class NoteController extends BaseController {
                 //文件
                 Note note = new Note(UUID.randomUUID().toString(), file.getName(), 0L, parentId, userId);
                 noteService.insertNote(note);
-
-                NoteFile noteFile = new NoteFile();
-                noteFile.setId(note.getId());
-                noteFile.setTitle(note.getFilename());
-                noteFile.setUserId(userId);
-                noteFile.setIsDeleted(0);
-                noteFile.setContent(FileUtil.readString(file, Charset.defaultCharset()));
+                NoteFile noteFile = new NoteFile(note.getId(), note.getFilename(), FileUtil.readString(file, Charset.defaultCharset()), "", note.getCreateTime(), note.getUpdateTime(), userId, 0);
                 noteFileService.save(noteFile);
             }
         }
