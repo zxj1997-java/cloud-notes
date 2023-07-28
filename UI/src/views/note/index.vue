@@ -12,7 +12,10 @@
             @onSave="onSave" @onUploadImg="onUploadImg">
     <template #defToolbars>
       <span style="margin-right:20px;font-size: 13px" v-text="noteFile.title"></span>
-      <span v-loading="loading"></span>
+      <span>
+        <span v-if="!loading"> <el-icon class="save-success" title="保存成功"></el-icon></span>
+        <span v-if="loading"  v-loading="loading"></span>
+      </span>
     </template>
   </MdEditor>
   <MdPreview v-else-if="showPreview==2" v-model="noteFile.content" :preview="true" :theme="theme" class="markedit" editorId="editpreview"/>
@@ -129,6 +132,12 @@ function handleKeyDown(event) {
 
 #editpreview {
   height: 100%;
+}
+
+.save-success {
+  width: 1em;
+  height: 1em;
+  content: url('@/assets/icons/note/success.svg');
 }
 
 .floating-button-wrapper-right {
