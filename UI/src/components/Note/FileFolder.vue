@@ -46,7 +46,7 @@
                     </template>
                     <el-tree :check-on-click-node="true" :expand-on-click-node="false" :lazy="true" :load="loadNode" @node-click="nodeClick"/>
                   </el-popover>
-                  <el-icon :color="'#0b9f0b'" class="pointer" title="分享" @click="shareNote(item)">
+                  <el-icon v-if="item.isDirectory==0" :color="'#0b9f0b'" class="pointer" title="分享" @click="shareNote(item)">
                     <Share/>
                   </el-icon>
                 </el-space>
@@ -120,14 +120,24 @@ function toChild(id, isDirectory) {
 
 function updateFileName(item) {
   item.updateTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
-  item.isEdit = !item.isEdit;
-  updateNote(item).then(response => {
+  if(item.filename==''){
     ElMessage({
-      message: '修改成功',
-      type: 'success',
+      message: '文件名不能为空',
+      type: 'error',
       customClass: "custom-tip"
     })
-  });
+  }
+  else{
+    updateNote(item).then(response => {
+      item.isEdit = !item.isEdit;
+      ElMessage({
+        message: '修改成功',
+        type: 'success',
+        customClass: "custom-tip"
+      })
+    }).catch(error => {
+    });
+  }
 }
 
 function confirmEvent(e) {

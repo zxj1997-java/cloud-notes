@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.note;
 
+import cn.hutool.core.util.StrUtil;
 import com.ruoyi.cloud.note.domain.Note;
 import com.ruoyi.cloud.note.service.INoteService;
 import com.ruoyi.cloud.notefile.entity.FileEntity;
@@ -92,8 +93,10 @@ public class NoteFileController extends BaseController {
         List<NoteFile> list = noteFileService.search(keyword, getUserId());
         for (NoteFile noteFile : list) {
             String content = noteFile.getContent();
-            String replaceStr = "<span style=\"color:#ff0000\">" + keyword + "</span>";
-            noteFile.setContent(content.replaceAll(keyword, replaceStr));
+            if(StrUtil.isNotBlank(content)){
+                String replaceStr = "<span style=\"color:#ff0000\">" + keyword + "</span>";
+                noteFile.setContent(content.replaceAll(keyword, replaceStr));
+            }
         }
         return list;
     }

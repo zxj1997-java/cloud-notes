@@ -81,9 +81,16 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Note note) {
-        Date date = new Date();
         String userId = String.valueOf(getUserId());
-
+        //文件重名判断
+        note.setUserId(getUserId());
+        List<Note> list = noteService.selectNoteList(note);
+        for (Note n : list) {
+            if(n.getFilename().equals(note.getFilename().trim())){
+                return error("文件名重复");
+            }
+        }
+        Date date = new Date();
         note.setId(UUID.randomUUID().toString());
         note.setIsDeleted(0L);
         note.setCreateTime(date);
@@ -101,7 +108,16 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Note note) {
+        //文件重名判断
+        note.setUserId(getUserId());
+        List<Note> list = noteService.selectNoteList(note);
+        for (Note n : list) {
+            if(n.getFilename().equals(note.getFilename().trim())){
+                return error("文件名重复");
+            }
+        }
         Date now = new Date();
+        note.setFilename(note.getFilename().trim());
         note.setUpdateTime(now);
         noteService.updateNote(note);
         NoteFile noteFile = repository.findById(note.getId()).orElse(new NoteFile());
