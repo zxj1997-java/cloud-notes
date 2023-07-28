@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -13,6 +15,8 @@ import java.util.Date;
  * @author ruoyi
  * @date 2023-07-20
  */
+@Data
+@NoArgsConstructor
 public class Note extends BaseEntity {
     private static final long serialVersionUID = 1L;
     /**
@@ -87,113 +91,5 @@ public class Note extends BaseEntity {
         setCreateTime(date);
         setCreateTime(date);
         setUpdateBy(String.valueOf(userId));
-    }
-
-    public Date getShareTime() {
-        return shareTime;
-    }
-
-    public void setShareTime(Date shareTime) {
-        this.shareTime = shareTime;
-    }
-
-    public Long getShareHours() {
-        return shareHours;
-    }
-
-    public void setShareHours(Long shareHours) {
-        this.shareHours = shareHours;
-    }
-
-    public Note() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public Long getIsDirectory() {
-        return isDirectory;
-    }
-
-    public void setIsDirectory(Long isDirectory) {
-        this.isDirectory = isDirectory;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public Long getIsTop() {
-        return isTop;
-    }
-
-    public void setIsTop(Long isTop) {
-        this.isTop = isTop;
-    }
-
-    public Long getIsFavorite() {
-        return isFavorite;
-    }
-
-    public void setIsFavorite(Long isFavorite) {
-        this.isFavorite = isFavorite;
-    }
-
-    public Long getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Long isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getIsShare() {
-        return isShare;
-    }
-
-    public void setIsShare(Long isShare) {
-        this.isShare = isShare;
-    }
-
-    @Override
-    public String toString() {
-        return "Note{" +
-                "id='" + id + '\'' +
-                ", filename='" + filename + '\'' +
-                ", isDirectory=" + isDirectory +
-                ", parentId='" + parentId + '\'' +
-                ", isShare=" + isShare +
-                ", isTop=" + isTop +
-                ", isFavorite=" + isFavorite +
-                ", isDeleted=" + isDeleted +
-                ", userId=" + userId +
-                ", shareTime=" + shareTime +
-                ", shareHours=" + shareHours +
-                '}';
     }
 }
