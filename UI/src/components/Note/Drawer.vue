@@ -17,7 +17,7 @@
     </template>
     <FileFolder :array="array" @openFile="openFile" @toChild="toChild"/>
     <el-dialog v-model="dialogVisible" title="文件导入">
-      <el-upload :http-request="handleUpload" class="upload-demo" drag multiple>
+      <el-upload :http-request="handleUpload" class="upload-demo" drag multiple :before-upload="beforeUpload">
         <el-icon class="el-icon--upload">
           <upload-filled/>
         </el-icon>
@@ -40,10 +40,11 @@
 </template>
 <script>
 import {nextTick} from "vue";
+
 export default {
   mounted() {
-    nextTick(()=>{
-      document.getElementsByClassName("el-upload__input").webkitdirectory=true;
+    nextTick(() => {
+      document.getElementsByClassName("el-upload__input").webkitdirectory = true;
     })
   }
 }
@@ -53,6 +54,7 @@ import {onMounted, ref} from 'vue';
 import FileFolder from './FileFolder.vue';
 import {addNote, childListNote, parentListNote, uploadFile} from "@/api/note/note";
 import {saveNoteFile} from "@/api/note/notefile";
+import {ElMessage} from "element-plus";
 
 const props = defineProps(['showDrawer']);
 const emits = defineEmits(['toggleTheme', 'toggleDrawer', 'openFile']);
@@ -125,11 +127,23 @@ const toggleTheme = () => {
 function handleUpload(file, onProgress) {
   let formData = new FormData();
   formData.append('file', file.file);
-  formData.append('parentId', currNodeId.value?currNodeId.value:'');
+  formData.append('parentId', currNodeId.value ? currNodeId.value : '');
   uploadFile(formData).then(response => {
     searchList({parentId: currNodeId.value});
     return response;
   });
+}
+
+function beforeUpload(file) {
+  const isMarkdown = file.type === "text/markdown";
+  if (!isMarkdown) {
+    ElMessage({
+      message: '只能上传markdown',
+      type: 'error',
+      customClass: "custom-tip"
+    })
+  }
+  return isMarkdown;
 }
 
 onMounted(() => {
