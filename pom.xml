@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ruoyi</groupId>
-    <artifactId>ruoyi</artifactId>
+    <artifactId>Cloud-Note</artifactId>
     <version>3.8.6</version>
 
-    <name>ruoyi</name>
+    <name>Cloud-Note</name>
     <url>http://www.ruoyi.vip</url>
     <description>云笔记</description>
 
