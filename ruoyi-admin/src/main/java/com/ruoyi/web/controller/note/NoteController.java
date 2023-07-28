@@ -11,10 +11,8 @@ import com.ruoyi.cloud.notefile.service.NoteFileService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
@@ -50,8 +48,7 @@ public class NoteController extends BaseController {
      */
     @GetMapping("/children")
     public TableDataInfo children(Note note) {
-        SysUser user = SecurityUtils.getLoginUser().getUser();
-        note.setUserId(user.getUserId());
+        note.setUserId(getUserId());
         List<Note> list = noteService.selectNoteList(note);
         return getDataTable(list);
     }
@@ -61,8 +58,7 @@ public class NoteController extends BaseController {
      */
     @GetMapping("/parents")
     public TableDataInfo parents(Note note) {
-        SysUser user = SecurityUtils.getLoginUser().getUser();
-        note.setUserId(user.getUserId());
+        note.setUserId(getUserId());
         String parent = noteService.findParentId(note.getId());
         note.setParentId(parent);
         note.setId(null);
@@ -86,8 +82,7 @@ public class NoteController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestBody Note note) {
         Date date = new Date();
-        SysUser user = SecurityUtils.getLoginUser().getUser();
-        String userId = String.valueOf(user.getUserId());
+        String userId = String.valueOf(getUserId());
 
         note.setId(UUID.randomUUID().toString());
         note.setIsDeleted(0L);
@@ -95,7 +90,7 @@ public class NoteController extends BaseController {
         note.setUpdateTime(date);
         note.setCreateBy(userId);
         note.setUpdateBy(userId);
-        note.setUserId(user.getUserId());
+        note.setUserId(getUserId());
         noteService.insertNote(note);
         return success(note);
     }
@@ -106,7 +101,6 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Note note) {
-        SysUser user = SecurityUtils.getLoginUser().getUser();
         Date now = new Date();
         note.setUpdateTime(now);
         noteService.updateNote(note);
@@ -115,7 +109,7 @@ public class NoteController extends BaseController {
         noteFile.setTitle(note.getFilename());
         noteFile.setUpdateTime(now);
         noteFile.setIsDeleted(0);
-        noteFile.setUserId(user.getUserId());
+        noteFile.setUserId(getUserId());
         repository.save(noteFile);
         return toAjax(true);
     }
@@ -149,15 +143,13 @@ public class NoteController extends BaseController {
 
     @PostMapping("/uploadFile")
     public AjaxResult handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("parentId") String parentId) throws IOException {
-        SysUser user = SecurityUtils.getLoginUser().getUser();
-
         File tempDir = new File(System.getProperty("java.io.tmpdir"), "uploaded-folder");
         FileUtils.deleteDirectory(tempDir);
         tempDir.mkdirs();
 
         file.transferTo(new File(tempDir, file.getOriginalFilename()));
 
-        parseFolder(tempDir, user.getUserId(), parentId);
+        parseFolder(tempDir, getUserId(), parentId);
         return AjaxResult.success();
     }
 
@@ -227,8 +219,7 @@ public class NoteController extends BaseController {
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Note note) {
-        SysUser user = SecurityUtils.getLoginUser().getUser();
-        note.setUserId(user.getUserId());
+        note.setUserId(getUserId());
         List<Note> list = noteService.selectNoteList(note);
         ExcelUtil<Note> util = new ExcelUtil<Note>(Note.class);
         util.exportExcel(response, list, "【请填写功能名称】数据");

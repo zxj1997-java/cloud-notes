@@ -7,8 +7,7 @@ import com.ruoyi.cloud.notefile.entity.NoteFile;
 import com.ruoyi.cloud.notefile.repository.NoteFileRepository;
 import com.ruoyi.cloud.notefile.service.MongoDbUploaderService;
 import com.ruoyi.cloud.notefile.service.NoteFileService;
-import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.utils.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notefile")
-public class NoteFileController {
+public class NoteFileController extends BaseController {
     @Autowired
     private NoteFileRepository repository;
     @Autowired
@@ -44,9 +43,8 @@ public class NoteFileController {
         noteFile.setUpdateTime(new Date());
         noteService.updateNote(noteFile);
         if (StringUtils.isEmpty(note.getContent())) {
-            SysUser user = SecurityUtils.getLoginUser().getUser();
             note.setContent("");
-            note.setUserId(user.getUserId());
+            note.setUserId(getUserId());
             note.setIsDeleted(0);
         }
         return noteFileService.save(note);
@@ -96,9 +94,7 @@ public class NoteFileController {
 
     @PostMapping("/search")
     public List<NoteFile> search(@RequestBody String keyword) {
-        SysUser user = SecurityUtils.getLoginUser().getUser();
-
-        List<NoteFile> list = noteFileService.search(keyword,user.getUserId());
+        List<NoteFile> list = noteFileService.search(keyword,getUserId());
         for (NoteFile noteFile : list) {
             String content = noteFile.getContent();
             String replaceStr="<span style=\"color:#ff0000\">"+keyword+"</span>";
