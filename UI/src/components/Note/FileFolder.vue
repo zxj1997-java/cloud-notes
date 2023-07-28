@@ -99,6 +99,7 @@ import {childListNote, delNote, updateNote, shareNoteApi} from "@/api/note/note"
 import {ElMessage} from "element-plus";
 import {ref} from "vue";
 import dayjs from "dayjs";
+import Clipboard from "clipboard";
 
 const props = defineProps(['array']);
 const emits = defineEmits(['toChild', 'openFile']);
@@ -210,24 +211,25 @@ function shareNote(item) {
   const projectPath = currentPath.replace(/\/\w+\.html(\?.*)?$/, '');
 
   const url = new URL(projectPath);
-  const port = url.port;
   const host = url.host;
   const protocol = url.protocol;
-  shareLink.value = protocol + host + port + "/share?id=" + currentFile.id
+  shareLink.value = protocol +"//"+ host + "/share?id=" + currentFile.id
   dialogShareVisible.value = true;
 }
 
-async function copyAndShare() {
+function copyAndShare() {
+  Clipboard.copy(shareLink.value);
+
   currentFile.shareHours = time.value;
-  await navigator.clipboard.writeText(shareLink.value);
-  dialogShareVisible.value = false
   shareNoteApi(currentFile).then((res) => {
     ElMessage({
       message: '已复制到系统剪切板',
       type: 'success',
       customClass: "custom-tip"
     })
+    dialogShareVisible.value = false;
   })
+
 }
 </script>
 <style scoped>
