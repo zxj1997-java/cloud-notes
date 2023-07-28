@@ -1,12 +1,12 @@
 <template>
   <el-row>
-    <el-col :span="3" class="col" style="background-color: #476a8c">
-      <MdCatalog :editorId="id" :scrollElement="scrollElement" />
+    <el-col :span="3" class="col left">
+      <MdCatalog :editorId="id" :scrollElement="scrollElement"/>
     </el-col>
-    <el-col :span="18" class="col" style="overflow: auto">
-      <MdPreview :editorId="id" :modelValue="text" />
+    <el-col :span="18" class="col">
+      <MdPreview :editorId="id" :modelValue="text"/>
     </el-col>
-    <el-col :span="3" class="col" style="background-color: #476a8c">
+    <el-col :span="3" class="col right">
       <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">云笔记 </h1>
       <h6 align="center" style="margin: 30px 0 30px;">基于若依v3.8.6</h6>
       <h4 align="center">基于SpringBoot+Vue前后端分离的Java云笔记</h4>
@@ -45,5 +45,13 @@ onMounted(() => {
 <style scoped>
 .col {
   height: 100vh;
+  overflow: auto
+}
+
+.left, .right {
+  height: 100vh;
+  padding: 0 10px;
+  background-color: #159957;
+  background-image: linear-gradient(120deg, #155799, #159957);
 }
 </style>
