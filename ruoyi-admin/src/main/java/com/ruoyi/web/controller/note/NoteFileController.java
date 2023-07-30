@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -89,16 +90,20 @@ public class NoteFileController extends BaseController {
 
 
     @PostMapping("/search")
-    public List<NoteFile> search(@RequestBody String keyword) {
-        List<NoteFile> list = noteFileService.search(keyword, getUserId());
-        for (NoteFile noteFile : list) {
-            String content = noteFile.getContent();
-            if(StrUtil.isNotBlank(content)){
-                String replaceStr = "<span style=\"color:#ff0000\">" + keyword + "</span>";
-                noteFile.setContent(content.replaceAll(keyword, replaceStr));
+    public List<NoteFile> search(@RequestBody(required = false) String keyword) {
+        if(StrUtil.isNotBlank(keyword)){
+            List<NoteFile> list = noteFileService.search(keyword, getUserId());
+            for (NoteFile noteFile : list) {
+                // 替换关键字
+                String content = noteFile.getContent();
+                if (StrUtil.isNotBlank(content)) {
+                    String replaceStr = "<span style=\"color:#ff0000\">" + keyword + "</span>";
+                    noteFile.setContent(content.replaceAll(keyword, replaceStr));
+                }
             }
+            return list;
         }
-        return list;
+        return Collections.emptyList();
     }
 
     @GetMapping("/searchByTitle")
