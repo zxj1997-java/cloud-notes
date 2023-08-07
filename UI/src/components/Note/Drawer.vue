@@ -2,8 +2,8 @@
   <el-drawer v-model="props.showDrawer" :show-close="false" :size="400" :z-index="100000" direction="ltr" @close="emits('toggleDrawer')">
     <template #header="{ close, titleId, titleClass }">
       <el-row>
-        <el-button icon="CaretLeft" type="primary" @click="toParent">上级目录</el-button>
-        <el-button icon="Upload" type="primary" @click="dialogVisible = true">导入</el-button>
+        <el-button icon="CaretLeft" circle type="primary" @click="toParent"></el-button>
+        <el-button icon="UploadFilled" circle type="primary" @click="dialogVisible = true"></el-button>
         <el-button :icon="iconShow" circle type="warning" @click="toggleTheme"/>
       </el-row>
       <el-space :size="10" wrap>
