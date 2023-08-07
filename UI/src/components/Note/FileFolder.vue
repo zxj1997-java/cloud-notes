@@ -273,6 +273,6 @@ function copyAndShare() {
 }
 
 .selected{
-  background-color: #ffe8e8;
+  background-color: rgba(196, 149, 62, 0.58);
 }
 </style>

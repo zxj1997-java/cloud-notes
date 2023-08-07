@@ -2,9 +2,10 @@
   <el-drawer v-model="props.showDrawer" :show-close="false" :size="400" :z-index="100000" direction="ltr" @close="emits('toggleDrawer')">
     <template #header="{ close, titleId, titleClass }">
       <el-row>
-        <el-button icon="CaretLeft" circle type="primary" @click="toParent"></el-button>
-        <el-button icon="UploadFilled" circle type="primary" @click="dialogVisible = true"></el-button>
-        <el-button :icon="iconShow" circle type="warning" @click="toggleTheme"/>
+        <el-button icon="CaretLeft" circle @click="toParent" title="上一级" color="#1dc49d"></el-button>
+        <el-button icon="UploadFilled" circle @click="dialogVisible = true" title="文档导入" color="#1da5c4"></el-button>
+        <el-button :icon="iconShow" circle @click="toggleTheme" title="模式" color="#3a4138"/>
+        <el-button icon="Calendar" circle title="最近" color="#00b391"/>
       </el-row>
       <el-space :size="10" wrap>
         <el-icon class="pointer" color="rgb(103,194,58)" title="新增文件夹" @click="addNoteFun(1)">
