@@ -59,8 +59,11 @@ public class NoteController extends BaseController {
     @GetMapping("/parents")
     public TableDataInfo parents(Note note) {
         note.setUserId(getUserId());
-        String parent = noteService.findParentId(note.getId());
-        note.setParentId(parent);
+        note.setParentId("root");
+        if(!"root".equals(note.getId())){
+            String parent = noteService.findParentId(note.getId());
+            note.setParentId(parent);
+        }
         note.setId(null);
         List<Note> list = noteService.selectNoteList(note);
         return getDataTable(list);

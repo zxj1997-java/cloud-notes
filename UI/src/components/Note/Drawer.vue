@@ -114,9 +114,12 @@ searchList({parentId: currNodeId.value});
 
 //上级目录
 function toParent() {
+  contentShow.value = "List"
   parentListNote({id: currNodeId.value}).then(response => {
     currNodeId.value = response.rows[0].parentId;
+    console.log(response.rows)
     array.value = response.rows;
+    console.log(array.value)
   });
 }
 
