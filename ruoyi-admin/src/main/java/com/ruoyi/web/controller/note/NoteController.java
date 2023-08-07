@@ -60,7 +60,7 @@ public class NoteController extends BaseController {
     public TableDataInfo parents(Note note) {
         note.setUserId(getUserId());
         note.setParentId("root");
-        if(!"root".equals(note.getId())){
+        if (!"root".equals(note.getId())) {
             String parent = noteService.findParentId(note.getId());
             note.setParentId(parent);
         }
@@ -90,7 +90,7 @@ public class NoteController extends BaseController {
         note.setIsDirectory(null);
         List<Note> list = noteService.selectNoteList(note);
         for (Note n : list) {
-            if(n.getFilename().equals(note.getFilename().trim())){
+            if (n.getFilename().equals(note.getFilename().trim())) {
                 return error("文件名重复");
             }
         }
@@ -109,7 +109,7 @@ public class NoteController extends BaseController {
         note.setUserId(getUserId());
         List<Note> list = noteService.selectNoteList(note);
         for (Note n : list) {
-            if(n.getFilename().equals(note.getFilename().trim())){
+            if (!n.getId().equals(note.getId()) && n.getFilename().equals(note.getFilename().trim())) {
                 return error("文件名重复");
             }
         }
@@ -118,7 +118,7 @@ public class NoteController extends BaseController {
         note.setUpdateTime(now);
         noteService.updateNote(note);
         NoteFile noteFile = repository.findById(note.getId()).orElse(new NoteFile());
-        noteFile=new NoteFile(note.getId(),note.getFilename(),noteFile.getContent(),noteFile.getHtml(),noteFile.getCreateTime(),now,getUserId(),0);
+        noteFile = new NoteFile(note.getId(), note.getFilename(), noteFile.getContent(), noteFile.getHtml(), noteFile.getCreateTime(), now, getUserId(), 0);
         repository.save(noteFile);
         return toAjax(true);
     }
