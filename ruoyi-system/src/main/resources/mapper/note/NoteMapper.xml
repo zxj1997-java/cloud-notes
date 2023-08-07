@@ -48,7 +48,6 @@
         <where>
             <if test="filename != null  and filename != ''">and filename like concat('%', #{filename}, '%')</if>
             <if test="isDirectory != null ">and is_directory = #{isDirectory}</if>
-            <if test="parentId == null">and parent_id is null</if>
             <if test="parentId != null">and parent_id = #{parentId}</if>
             and ifnull(is_deleted,0)!=1
             <if test="isTop != null ">and is_top = #{isTop}</if>
@@ -58,7 +57,7 @@
             <if test="userId != null ">and user_id = #{userId}</if>
             <if test="shareTime != null ">and share_time = #{shareTime}</if>
             <if test="shareHours != null ">and share_hours = #{shareHours}</if>
-            order by is_directory desc
+            order by is_directory desc,update_time desc
         </where>
     </select>
 

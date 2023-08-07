@@ -4,8 +4,8 @@
       <el-row>
         <el-button icon="CaretLeft" circle @click="toParent" title="上一级" color="#1dc49d"></el-button>
         <el-button icon="UploadFilled" circle @click="dialogVisible = true" title="文档导入" color="#1da5c4"></el-button>
-        <el-button :icon="iconShow" circle @click="toggleTheme" title="模式" color="#3a4138"/>
-        <el-button icon="Calendar" circle title="最近" color="#00b391"/>
+        <el-button :icon="modelShow" circle @click="toggleTheme" title="模式" color="#3a4138"/>
+        <el-button :icon="contentShow" circle title="最近" color="#00b391" @click="getRecentNote"/>
       </el-row>
       <el-space :size="10" wrap>
         <el-icon class="pointer" color="rgb(103,194,58)" title="新增文件夹" @click="addNoteFun(1)">
@@ -61,9 +61,21 @@ const props = defineProps(['showDrawer']);
 const emits = defineEmits(['toggleTheme', 'toggleDrawer', 'openFile']);
 const theme = ref('light');
 const dialogVisible = ref(false);
-const currNodeId = ref(null);
-const iconShow = ref("Sunny");
+const currNodeId = ref("root");
+const modelShow = ref("Sunny");
+const contentShow = ref("List");
 const array = ref(null);
+
+function getRecentNote() {
+  if (contentShow.value === "List") {
+    contentShow.value = "Calendar";
+    searchList({isDirectory: 0});
+  } else {
+    contentShow.value = "List"
+    searchList({parentId: currNodeId.value});
+  }
+}
+
 
 function addNoteFun(isDirectory) {
   let note = {
@@ -120,7 +132,7 @@ function openFile(id) {
 
 const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
-  iconShow.value = theme.value === 'light' ? 'Sunny' : 'Moon';
+  modelShow.value = theme.value === 'light' ? 'Sunny' : 'Moon';
   emits('toggleTheme', theme.value);
 };
 
@@ -150,7 +162,7 @@ function beforeUpload(file) {
 onMounted(() => {
   let localTheme = localStorage.getItem('cloud-note-theme');
   if (localTheme) {
-    iconShow.value = localTheme === 'light' ? 'Sunny' : 'Moon';
+    modelShow.value = localTheme === 'light' ? 'Sunny' : 'Moon';
   }
 })
 </script>
