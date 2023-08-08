@@ -68,7 +68,7 @@ function onBlur(event) {
   saveNoteFile(noteFile.value).then(response => {
     setTimeout(function(){
       loading.value=false;
-    },1000)
+    },500)
   })
 }
 
@@ -82,7 +82,7 @@ function onSave(value, html) {
     saveNoteFile(noteFile.value).then(response => {
       setTimeout(function(){
         loading.value=false;
-      },1000)
+      },500)
     })
   }).catch(error => {
     ElMessage({
