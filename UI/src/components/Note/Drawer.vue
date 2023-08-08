@@ -56,6 +56,10 @@ import FileFolder from './FileFolder.vue';
 import {addNote, childListNote, parentListNote, uploadFile} from "@/api/note/note";
 import {saveNoteFile} from "@/api/note/notefile";
 import {ElMessage} from "element-plus";
+import { useDark, useToggle } from '@vueuse/core'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark);
 
 const props = defineProps(['showDrawer']);
 const emits = defineEmits(['toggleTheme', 'toggleDrawer', 'openFile']);
@@ -117,9 +121,7 @@ function toParent() {
   contentShow.value = "List"
   parentListNote({id: currNodeId.value}).then(response => {
     currNodeId.value = response.rows[0].parentId;
-    console.log(response.rows)
     array.value = response.rows;
-    console.log(array.value)
   });
 }
 
@@ -136,6 +138,7 @@ function openFile(id) {
 const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
   modelShow.value = theme.value === 'light' ? 'Sunny' : 'Moon';
+  toggleDark();
   emits('toggleTheme', theme.value);
 };
 
@@ -163,7 +166,7 @@ function beforeUpload(file) {
 }
 
 onMounted(() => {
-  let localTheme = localStorage.getItem('cloud-note-theme');
+  let localTheme = localStorage.getItem('vueuse-color-scheme');
   if (localTheme) {
     modelShow.value = localTheme === 'light' ? 'Sunny' : 'Moon';
   }

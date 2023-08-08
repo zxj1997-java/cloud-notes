@@ -45,7 +45,6 @@ const toolbars = ref([0, 'bold', 'underline', 'italic', '-', 'title', 'strikeThr
 
 function toggleTheme(res) {
   theme.value = res;
-  localStorage.setItem('cloud-note-theme', res);
 }
 
 //开打文件
@@ -107,7 +106,7 @@ function onUploadImg(files, callback) {
 }
 
 onMounted(() => {
-  let localTheme = localStorage.getItem('cloud-note-theme');
+  let localTheme = localStorage.getItem('vueuse-color-scheme');
   if (localTheme) {
     theme.value = localTheme;
   }
