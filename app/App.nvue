@@ -1,0 +1,14 @@
+<script>
+	export default {
+		onLoad() {
+			
+		}
+		onNavigationBarButtonTap(e) {
+			console.log(e)
+		}
+	}
+</script>
+
+<style>
+	/*每个页面公共css */
+</style>
