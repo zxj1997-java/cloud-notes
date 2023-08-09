@@ -58,13 +58,8 @@
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
-        <div style="width: 100%;">
-          <div v-if="register" style="float: left;">
-            <router-link :to="'/register'" class="link-type">立即注册</router-link>
-          </div>
-          <div style="float: right;">
-            <router-link :to="'/qrlogin'" class="link-type">扫码登录</router-link>
-          </div>
+        <div v-if="register" style="float: right;">
+          <router-link :to="'/register'" class="link-type">立即注册</router-link>
         </div>
       </el-form-item>
     </el-form>
