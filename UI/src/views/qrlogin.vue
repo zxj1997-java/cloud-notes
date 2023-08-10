@@ -2,7 +2,7 @@
   <div class="register">
     <el-form ref="registerRef" class="register-form">
       <h3 class="title">云笔记</h3>
-      <img title="扫码登录" src="../assets/images/qr.png" style="width: 100%">
+      <qrcode-vue :value="qrCodeUrl" style="width: 100%;height: 100%" :size="512"></qrcode-vue>
       <el-form-item style="width:100%;">
         <div style="float: right;">
           <router-link :to="'/login'" class="link-type">账户密码登录</router-link>
@@ -17,7 +17,10 @@
 </template>
 
 <script setup>
-
+import QrcodeVue from 'qrcode.vue'
+import {ref} from "vue";
+//二维码链接
+const qrCodeUrl = ref("cloud_note&8a4a4662-698c-45f1-97fe-fdbbe34213c2");
 </script>
 
 <style lang='scss' scoped>
