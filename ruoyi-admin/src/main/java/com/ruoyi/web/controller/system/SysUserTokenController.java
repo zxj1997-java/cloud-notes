@@ -67,7 +67,9 @@ public class SysUserTokenController extends BaseController {
      *
      * @return
      */
-    public AjaxResult confirmValid(String id) {
+    @Log(title = "扫码登录", businessType = BusinessType.INSERT)
+    @PostMapping("/confirmValid/{id}")
+    public AjaxResult confirmValid(@PathVariable String id) {
         SysUserToken userToken = sysUserTokenService.selectSysUserTokenById(id);
         if (userToken == null || userToken.getState() == 1) {
             return toAjax(false);
