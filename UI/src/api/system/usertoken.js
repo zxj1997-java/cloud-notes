@@ -5,7 +5,10 @@ export function listToken(query) {
   return request({
     url: '/system/token/list',
     method: 'get',
-    params: query
+    params: query,
+    headers: {
+      isToken: false
+    },
   })
 }
 
@@ -13,7 +16,10 @@ export function listToken(query) {
 export function getToken(id) {
   return request({
     url: '/system/token/' + id,
-    method: 'get'
+    method: 'get',
+    headers: {
+      isToken: false
+    },
   })
 }
 
