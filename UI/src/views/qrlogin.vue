@@ -19,8 +19,17 @@
 <script setup>
 import QrcodeVue from 'qrcode.vue'
 import {ref} from "vue";
+import {addToken} from "../api/system/usertoken";
 //二维码链接
-const qrCodeUrl = ref("cloud_note&8a4a4662-698c-45f1-97fe-fdbbe34213c2");
+const qrCodeUrl = ref(null);
+
+function getQrCode(){
+  addToken().then(res => {
+    qrCodeUrl.value=res;
+  });
+}
+
+getQrCode();
 </script>
 
 <style lang='scss' scoped>

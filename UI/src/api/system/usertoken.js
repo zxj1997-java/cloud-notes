@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询扫码登录列表
 export function listToken(query) {
   return request({
-    url: '/system/token/list',
+    url: '/system/user/token/list',
     method: 'get',
     params: query,
     headers: {
@@ -15,7 +15,7 @@ export function listToken(query) {
 // 查询扫码登录详细
 export function getToken(id) {
   return request({
-    url: '/system/token/' + id,
+    url: '/system/user/token/' + id,
     method: 'get',
     headers: {
       isToken: false
@@ -24,11 +24,10 @@ export function getToken(id) {
 }
 
 // 新增扫码登录
-export function addToken(data) {
+export function addToken() {
   return request({
-    url: '/system/token',
+    url: '/system/user/token',
     method: 'post',
-    data: data,
     headers: {
       isToken: false
     }
@@ -38,7 +37,7 @@ export function addToken(data) {
 // 修改扫码登录
 export function updateToken(data) {
   return request({
-    url: '/system/token',
+    url: '/system/user/token',
     method: 'put',
     data: data
   })
@@ -47,7 +46,7 @@ export function updateToken(data) {
 // 删除扫码登录
 export function delToken(id) {
   return request({
-    url: '/system/token/' + id,
+    url: '/system/user/token/' + id,
     method: 'delete'
   })
 }
