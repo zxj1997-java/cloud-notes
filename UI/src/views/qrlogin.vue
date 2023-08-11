@@ -18,14 +18,26 @@
 
 <script setup>
 import QrcodeVue from 'qrcode.vue'
+import {setToken} from '@/utils/auth'
 import {ref} from "vue";
-import {addToken} from "../api/system/usertoken";
+import {addToken, getToken} from "../api/system/usertoken";
+import {useRouter} from "vue-router";
 //二维码链接
 const qrCodeUrl = ref(null);
-
-function getQrCode(){
+const router = useRouter();
+function getQrCode() {
   addToken().then(res => {
-    qrCodeUrl.value=res;
+    qrCodeUrl.value = res;
+
+    let t = setInterval(function () {
+      getToken(res).then(res => {
+        if (res.state == 1 && res.token) {
+          setToken(res.token);
+          router.push({path: "/note"});
+          clearInterval(t);
+        }
+      })
+    }, 1000)
   });
 }
 
