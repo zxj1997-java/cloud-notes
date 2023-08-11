@@ -30,9 +30,10 @@ function getQrCode() {
     qrCodeUrl.value = res;
 
     let t = setInterval(function () {
-      getToken(res).then(res => {
-        if (res.state == 1 && res.token) {
-          setToken(res.token);
+      getToken(res).then(result => {
+        if (result.data.state == 1 && result.data.token) {
+          console.log(result.token)
+          setToken(result.data.token);
           router.push({path: "/note"});
           clearInterval(t);
         }

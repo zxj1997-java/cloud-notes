@@ -109,7 +109,7 @@
       <tr>
         <td>CTRL + SHIFT + I</td>
         <td>图片链接</td>
-        <td><img alt="图片" src="https://imzbf.github.io/md-editor-v3/imgs/preview-light.png" style="width: 300px"></td>
+        <td><img alt="图片" src="https://pic-zxj.oss-cn-shanghai.aliyuncs.com/preview-light.png" style="width: 300px"></td>
       </tr>
       <tr>
         <td>CTRL + SHIFT + Z</td>
