@@ -1,7 +1,11 @@
 package com.ruoyi.web.controller.system;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +27,13 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 扫码登录Controller
- * 
+ *
  * @author ruoyi
  * @date 2023-08-11
  */
 @RestController
 @RequestMapping("/system/user/token")
-public class SysUserTokenController extends BaseController
-{
+public class SysUserTokenController extends BaseController {
     @Autowired
     private ISysUserTokenService sysUserTokenService;
 
@@ -39,8 +42,7 @@ public class SysUserTokenController extends BaseController
      * 获取扫码登录详细信息
      */
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") String id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") String id) {
         return success(sysUserTokenService.selectSysUserTokenById(id));
     }
 
@@ -49,9 +51,28 @@ public class SysUserTokenController extends BaseController
      */
     @Log(title = "扫码登录", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody SysUserToken sysUserToken)
-    {
-        return toAjax(sysUserTokenService.insertSysUserToken(sysUserToken));
+    public String add() {
+        String uuid = UUID.randomUUID().toString();
+        SysUserToken userToken = new SysUserToken();
+        userToken.setId(uuid);
+        userToken.setCreateTime(new Date());
+        userToken.setState(0L);
+        sysUserTokenService.insertSysUserToken(userToken);
+        return uuid;
+    }
+
+
+    /**
+     * 确认二维码是否真是有效
+     *
+     * @return
+     */
+    public AjaxResult confirmValid(String id) {
+        SysUserToken userToken = sysUserTokenService.selectSysUserTokenById(id);
+        if (userToken == null || userToken.getState() == 1) {
+            return toAjax(false);
+        }
+        return toAjax(true);
     }
 
     /**
@@ -59,8 +80,7 @@ public class SysUserTokenController extends BaseController
      */
     @Log(title = "扫码登录", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody SysUserToken sysUserToken)
-    {
+    public AjaxResult edit(@RequestBody SysUserToken sysUserToken) {
         return toAjax(sysUserTokenService.updateSysUserToken(sysUserToken));
     }
 
@@ -68,9 +88,8 @@ public class SysUserTokenController extends BaseController
      * 删除扫码登录
      */
     @Log(title = "扫码登录", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable String[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable String[] ids) {
         return toAjax(sysUserTokenService.deleteSysUserTokenByIds(ids));
     }
 }

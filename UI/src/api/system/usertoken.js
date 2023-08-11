@@ -28,7 +28,10 @@ export function addToken(data) {
   return request({
     url: '/system/token',
     method: 'post',
-    data: data
+    data: data,
+    headers: {
+      isToken: false
+    }
   })
 }
 
